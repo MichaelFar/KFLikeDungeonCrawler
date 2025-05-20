@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://cvn2a5ou7chay"]
+
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://scenes/proto_controller.tscn" id="1_23u8n"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_23u8n"]
+
+[sub_resource type="Sky" id="Sky_23u8n"]
+sky_material = SubResource("PhysicalSkyMaterial_23u8n")
+
+[sub_resource type="Environment" id="Environment_uyrf3"]
+background_mode = 2
+sky = SubResource("Sky_23u8n")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_atm81"]
+albedo_color = Color(0.366595, 0.366595, 0.366595, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_23u8n"]
+material = SubResource("StandardMaterial3D_atm81")
+size = Vector2(30, 30)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_23u8n"]
+
+[node name="TestPlayArea" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.331411, 0.374393, 3.72529e-09, 0.748781, 0.662818, -0.500003, 0.574016, -0.648462, 0, 0, 0)
+shadow_enabled = true
+shadow_blur = 0.54
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_uyrf3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_23u8n")
+
+[node name="ProtoController" parent="." instance=ExtResource("1_23u8n")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_23u8n")
+
+[editable path="ProtoController"]

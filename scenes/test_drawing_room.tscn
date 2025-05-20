@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1gj4k847a6sx"]
+
+[ext_resource type="Script" uid="uid://cw5h041p3v6gd" path="res://scripts/test_drawing_room.gd" id="1_d2pfa"]
+[ext_resource type="PackedScene" uid="uid://riqw2p4sr75q" path="res://scenes/drawing_scene.tscn" id="1_v4ju1"]
+
+[node name="TestDrawingRoom" type="Node2D"]
+script = ExtResource("1_d2pfa")
+
+[node name="drawing_scene" parent="." instance=ExtResource("1_v4ju1")]

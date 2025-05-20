@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://riqw2p4sr75q"]
+
+[ext_resource type="Script" uid="uid://syftgjasl03v" path="res://scripts/drawing_scene.gd" id="1_dpmcr"]
+[ext_resource type="PackedScene" uid="uid://c5baqlhl463w5" path="res://scenes/brush_sprite.tscn" id="2_5unyn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5unyn"]
+size = Vector2(1037, 608)
+
+[node name="drawing_scene" type="Node2D"]
+script = ExtResource("1_dpmcr")
+brushScene = ExtResource("2_5unyn")
+color = Color(0, 0.54902, 0, 1)
+colorArray = [Color(0, 0.635294, 0, 1), Color(0.772549, 0.313726, 0, 1)]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(518.5, 304)
+shape = SubResource("RectangleShape2D_5unyn")
+
+[node name="Panel" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 8
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -121.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Button" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Click to Clear"
+
+[node name="Button2" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+text = "Load Rune"
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
+[connection signal="button_up" from="Panel/HBoxContainer/Button" to="." method="_on_button_button_up"]
+[connection signal="button_up" from="Panel/HBoxContainer/Button2" to="." method="_on_button_2_button_up"]
