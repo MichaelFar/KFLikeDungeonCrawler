@@ -56,7 +56,10 @@ func bob_up_and_down():
 		if(globalTween.is_running()):
 			
 			globalTween.kill()
-			
+			returnToOriginalY()
+			return
+	if(!playerController.isMoving):
+		return
 	bobDirection *= -1
 	var tween = get_tree().create_tween()
 	globalTween = tween
@@ -64,9 +67,9 @@ func bob_up_and_down():
 	tween.tween_property(self, "position:y", position.y + (.05 * bobDirection), 0.4)
 	tween.finished.connect(bob_up_and_down)
 	isBobbing = true
-
-#func returnToOriginalY():
-	#var tween = get_tree().create_tween()
-	#tween.set_trans(Tween.TRANS_QUAD)
-	#tween.tween_property(self, "position:y", originalPositionY, 0.1)
+	
+func returnToOriginalY():
+	var tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(self, "position:y", originalPositionY, 0.1)
 	

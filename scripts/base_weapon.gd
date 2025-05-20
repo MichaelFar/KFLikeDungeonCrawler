@@ -61,7 +61,7 @@ func return_weapon():
 	var tween = get_tree().create_tween()
 	globalTween = tween
 	#tween.set_ease(Tween.EASE_OUT)
-	tween.set_trans(Tween.TRANS_CIRC)
+	tween.set_trans(Tween.TRANS_SINE)
 	tween.parallel().tween_property(weaponPivot, "rotation_degrees:y",0, 1.4)
 	tween.parallel().tween_property(weaponPivot, "rotation_degrees:z",0, 1.4)
 	
