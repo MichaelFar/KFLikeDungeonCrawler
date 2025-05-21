@@ -58,8 +58,11 @@ func bob_up_and_down():
 			globalTween.kill()
 			returnToOriginalY()
 			return
+			
 	if(!playerController.isMoving):
+		
 		return
+		
 	bobDirection *= -1
 	var tween = get_tree().create_tween()
 	globalTween = tween
