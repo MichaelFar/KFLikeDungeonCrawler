@@ -18,6 +18,8 @@ var bobDirection : int = -1
 
 var isBobbing : bool = false
 
+
+
 var globalTween : Tween
 
 func _ready() -> void:
@@ -39,6 +41,18 @@ func _input(event: InputEvent) -> void:
 	if(event.is_action_released("swing")):
 		
 		weapon.swing_weapon()
+	
+	if(event.is_action_pressed("block")):
+		
+		weapon.block_with_weapon()
+		
+	elif(event.is_action_released("block")):
+		
+		weapon.return_weapon()
+	
+	#if(weapon.weaponState == weapon.WeaponStates.BLOCKING):
+		#
+		#weapon.return_weapon()
 		
 func sway_weapon(delta):
 	
@@ -60,7 +74,7 @@ func bob_up_and_down():
 			return
 			
 	if(!playerController.isMoving):
-		
+		returnToOriginalY()
 		return
 		
 	bobDirection *= -1
@@ -72,7 +86,8 @@ func bob_up_and_down():
 	isBobbing = true
 	
 func returnToOriginalY():
+	
 	var tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(self, "position:y", originalPositionY, 0.1)
+	tween.tween_property(self, "position:y", originalPositionY, 0.4)
 	

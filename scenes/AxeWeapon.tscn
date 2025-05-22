@@ -1,26 +1,25 @@
-[gd_scene load_steps=13 format=4 uid="uid://b1jveyo7lda5m"]
+[gd_scene load_steps=12 format=4 uid="uid://d3oc2fa4k2v5d"]
 
-[ext_resource type="Script" uid="uid://djmfsqrnpgkby" path="res://scripts/base_weapon.gd" id="1_kjhvj"]
-[ext_resource type="Texture2D" uid="uid://c3nxqxhw43c4x" path="res://textures/BaseSword_SwordMaterial_BaseColor.png" id="2_ekty5"]
-[ext_resource type="Curve3D" uid="uid://dqrppbi1njpud" path="res://attack_curve_resources/BaseWeaponCurve.tres" id="2_kwyxs"]
-[ext_resource type="Curve3D" uid="uid://bjnvl8l50bc37" path="res://attack_curve_resources/BaseWeaponBlockCurve.tres" id="3_41tij"]
-[ext_resource type="Texture2D" uid="uid://bs34q37d2dame" path="res://textures/BaseSword_SwordMaterial_Height.png" id="3_kwyxs"]
-[ext_resource type="Texture2D" uid="uid://cgglbicx8o35s" path="res://textures/BaseSword_SwordMaterial_Metallic.png" id="4_41tij"]
-[ext_resource type="Texture2D" uid="uid://cqkiv8e330f8m" path="res://textures/BaseSword_SwordMaterial_Normal.png" id="5_rihcx"]
-[ext_resource type="Texture2D" uid="uid://lk3a4en3hnbu" path="res://textures/BaseSword_SwordMaterial_Roughness.png" id="6_lbx0t"]
+[ext_resource type="Script" uid="uid://djmfsqrnpgkby" path="res://scripts/base_weapon.gd" id="1_8tiao"]
+[ext_resource type="Texture2D" uid="uid://c3nxqxhw43c4x" path="res://textures/BaseSword_SwordMaterial_BaseColor.png" id="2_n5s8n"]
+[ext_resource type="Curve3D" uid="uid://dm32n58shc2o7" path="res://attack_curve_resources/AxeWeaponAttackCurve.tres" id="2_oeng5"]
+[ext_resource type="Texture2D" uid="uid://bs34q37d2dame" path="res://textures/BaseSword_SwordMaterial_Height.png" id="3_oeng5"]
+[ext_resource type="Texture2D" uid="uid://cgglbicx8o35s" path="res://textures/BaseSword_SwordMaterial_Metallic.png" id="4_1lffl"]
+[ext_resource type="Texture2D" uid="uid://cqkiv8e330f8m" path="res://textures/BaseSword_SwordMaterial_Normal.png" id="5_6tbnn"]
+[ext_resource type="Texture2D" uid="uid://lk3a4en3hnbu" path="res://textures/BaseSword_SwordMaterial_Roughness.png" id="6_baupo"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ekty5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dg1qm"]
-albedo_texture = ExtResource("2_ekty5")
+albedo_texture = ExtResource("2_n5s8n")
 metallic = 1.0
-metallic_texture = ExtResource("4_41tij")
-roughness_texture = ExtResource("6_lbx0t")
+metallic_texture = ExtResource("4_1lffl")
+roughness_texture = ExtResource("6_baupo")
 normal_enabled = true
 normal_scale = -1.05
-normal_texture = ExtResource("5_rihcx")
+normal_texture = ExtResource("5_6tbnn")
 heightmap_enabled = true
-heightmap_texture = ExtResource("3_kwyxs")
+heightmap_texture = ExtResource("3_oeng5")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_5md78"]
 _surfaces = [{
@@ -55,8 +54,8 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_5md78")
 
-[node name="BaseWeapon" type="Node3D" node_paths=PackedStringArray("weaponMesh", "weaponPivot", "weaponPathFollow", "swingCoolDownTimer", "weaponPath3D", "blockRotationNode")]
-script = ExtResource("1_kjhvj")
+[node name="BaseWeapon" type="Node3D" node_paths=PackedStringArray("weaponMesh", "weaponPivot", "weaponPathFollow")]
+script = ExtResource("1_8tiao")
 yWeaponSway = 0.8
 xWeaponSway = 0.8
 yWeaponSwayPosition = 0.05
@@ -65,43 +64,29 @@ yWeaponRotation = 60.51
 xWeaponRotation = 60.14
 yWeaponRotationPosition = 0.05
 xWeaponRotationPosition = 0.05
-zAngleSwingLimit = 29.411
-yAngleSwingLimit = 28.306
+zAngleSwingLimit = 30.0
 swayMin = Vector2(-40, -40)
 swayMax = Vector2(40, 40)
-swingSpeed = 0.38
-swingCooldown = 0.3
-weaponMesh = NodePath("BlockRotationParent/pivotPoint/Path3D/PathFollow3D/SwordModel")
-weaponPivot = NodePath("BlockRotationParent/pivotPoint")
-weaponPathFollow = NodePath("BlockRotationParent/pivotPoint/Path3D/PathFollow3D")
-swingCoolDownTimer = NodePath("Timer")
-weaponPath3D = NodePath("BlockRotationParent/pivotPoint/Path3D")
-blockRotationNode = NodePath("BlockRotationParent")
-attackCurve = ExtResource("2_kwyxs")
-blockCurve = ExtResource("3_41tij")
+weaponMesh = NodePath("pivotPoint/Path3D/PathFollow3D/SwordModel")
+weaponPivot = NodePath("pivotPoint")
+weaponPathFollow = NodePath("pivotPoint/Path3D/PathFollow3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.451709, 0, 0, 0, 0.681579, 0, 0, 0, 0.333393, 0, 0, 0.393292)
 visible = false
 mesh = SubResource("SphereMesh_ekty5")
 
-[node name="BlockRotationParent" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.399681, 0)
+[node name="pivotPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0437016, -1.16878)
 
-[node name="pivotPoint" type="Node3D" parent="BlockRotationParent"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.288111, 0.00817478, -0.742222)
+[node name="Path3D" type="Path3D" parent="pivotPoint"]
+transform = Transform3D(1, 0, 0, 0, 0.960289, 0.279007, 0, -0.279007, 0.960289, -8.62479e-05, -0.470374, 1.73477)
+curve = ExtResource("2_oeng5")
 
-[node name="Path3D" type="Path3D" parent="BlockRotationParent/pivotPoint"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.288024, -0.131764, 1.39405)
-curve = ExtResource("2_kwyxs")
+[node name="PathFollow3D" type="PathFollow3D" parent="pivotPoint/Path3D"]
+transform = Transform3D(0.999961, 0.00147886, 0.00197022, -1.16411e-10, 0.799664, -0.600236, -0.00246372, 0.600232, 0.799664, 0.00030303, 0.327831, -0.499681)
 
-[node name="PathFollow3D" type="PathFollow3D" parent="BlockRotationParent/pivotPoint/Path3D"]
-transform = Transform3D(0.999853, 0.000208944, 0.000399121, 0, 0.885886, -0.463745, -0.000450479, 0.463758, 0.885861, 0.000286372, 0.204488, -0.534883)
-
-[node name="SwordModel" type="MeshInstance3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D"]
-transform = Transform3D(0.508464, -3.67102e-11, -0.000210795, 0.000106248, 0.319283, 0.216992, 0.000202958, -0.167143, 0.414505, -0.000147435, -0.541645, 0.151548)
+[node name="SwordModel" type="MeshInstance3D" parent="pivotPoint/Path3D/PathFollow3D"]
+transform = Transform3D(0.522934, 0, 0, 0, 0.479844, 0.168651, 0, -0.156781, 0.516174, -3.63798e-12, -0.931602, 0.388556)
 mesh = SubResource("ArrayMesh_xc2hr")
-skeleton = NodePath("../../../../..")
-
-[node name="Timer" type="Timer" parent="."]
-one_shot = true
+skeleton = NodePath("../../../..")
