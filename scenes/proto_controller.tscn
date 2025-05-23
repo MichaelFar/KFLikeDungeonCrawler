@@ -15,8 +15,9 @@ height = 2.095
 radius = 0.4
 height = 1.8
 
-[node name="ProtoController" type="CharacterBody3D"]
+[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_ucva2")
+camera = NodePath("Head/Camera3D")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07134, 0)

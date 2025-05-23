@@ -138,7 +138,7 @@ func block_with_weapon():
 	tween.set_trans(Tween.TRANS_CIRC)
 	tween.parallel().tween_property(weaponPivot, "rotation_degrees:y",0, swingSpeed)
 	tween.parallel().tween_property(weaponPivot, "rotation_degrees:z",0, swingSpeed)
-	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:x", -45, swingSpeed)
+	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:x", -60, swingSpeed)
 	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:y", 90.0, swingSpeed)
 	tween.parallel().tween_property(weaponPathFollow, "progress_ratio", 0.0, swingSpeed)
 	tween.finished.connect(set_can_release.bind(true))
@@ -146,3 +146,8 @@ func block_with_weapon():
 func set_can_release(new_value : bool):
 	
 	canReleaseBlock = new_value
+
+func _on_hit_box_body_entered(body: Node3D) -> void:
+	if(body is PhysicsProp):
+		var modified_camera_direction : Vector3 = Vector3(Global.camera.get_global_transform().basis.z.x, 0, Global.camera.get_global_transform().basis.z.z)
+		body.apply_central_impulse(-modified_camera_direction * 10)

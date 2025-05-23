@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://b1jveyo7lda5m"]
+[gd_scene load_steps=15 format=4 uid="uid://b1jveyo7lda5m"]
 
 [ext_resource type="Script" uid="uid://djmfsqrnpgkby" path="res://scripts/base_weapon.gd" id="1_kjhvj"]
 [ext_resource type="Texture2D" uid="uid://c3nxqxhw43c4x" path="res://textures/BaseSword_SwordMaterial_BaseColor.png" id="2_ekty5"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cgglbicx8o35s" path="res://textures/BaseSword_SwordMaterial_Metallic.png" id="4_41tij"]
 [ext_resource type="Texture2D" uid="uid://cqkiv8e330f8m" path="res://textures/BaseSword_SwordMaterial_Normal.png" id="5_rihcx"]
 [ext_resource type="Texture2D" uid="uid://lk3a4en3hnbu" path="res://textures/BaseSword_SwordMaterial_Roughness.png" id="6_lbx0t"]
+[ext_resource type="Script" uid="uid://c5744uu0aj45" path="res://scripts/hit_box.gd" id="9_rihcx"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ekty5"]
 
@@ -55,6 +56,10 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_5md78")
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_41tij"]
+radius = 0.1
+height = 0.930664
+
 [node name="BaseWeapon" type="Node3D" node_paths=PackedStringArray("weaponMesh", "weaponPivot", "weaponPathFollow", "swingCoolDownTimer", "weaponPath3D", "blockRotationNode")]
 script = ExtResource("1_kjhvj")
 yWeaponSway = 0.8
@@ -96,12 +101,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.288024, -0.131764, 1.39405)
 curve = ExtResource("2_kwyxs")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="BlockRotationParent/pivotPoint/Path3D"]
-transform = Transform3D(0.999853, 0.000208944, 0.000399121, 0, 0.885886, -0.463745, -0.000450479, 0.463758, 0.885861, 0.000286372, 0.204488, -0.534883)
+transform = Transform3D(0.999852, 0.000208944, 0.00039912, 0, 0.885886, -0.463744, -0.000450478, 0.463758, 0.88586, 0.000286372, 0.204488, -0.534883)
 
 [node name="SwordModel" type="MeshInstance3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D"]
 transform = Transform3D(0.508464, -3.67102e-11, -0.000210795, 0.000106248, 0.319283, 0.216992, 0.000202958, -0.167143, 0.414505, -0.000147435, -0.541645, 0.151548)
 mesh = SubResource("ArrayMesh_xc2hr")
 skeleton = NodePath("../../../../..")
 
+[node name="HitBox" type="Area3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D" node_paths=PackedStringArray("objectToFollow")]
+transform = Transform3D(1, -9.02219e-10, -0.000450546, 0.000208959, 0.885946, 0.463788, 0.000399159, -0.463788, 0.885946, -0.000147435, 0.3195, -0.299257)
+script = ExtResource("9_rihcx")
+objectToFollow = NodePath("../SwordModel")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D/HitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.52298e-17, -0.139472, -2.27374e-13)
+shape = SubResource("CapsuleShape3D_41tij")
+
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
+
+[connection signal="body_entered" from="BlockRotationParent/pivotPoint/Path3D/PathFollow3D/HitBox" to="." method="_on_hit_box_body_entered"]
