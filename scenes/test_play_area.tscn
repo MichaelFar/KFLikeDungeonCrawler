@@ -26,11 +26,6 @@ size = Vector2(30, 30)
 
 [node name="TestPlayArea" type="Node3D"]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.331411, 0.374393, 3.72529e-09, 0.748781, 0.662818, -0.500003, 0.574016, -0.648462, 0, 0, 0)
-shadow_enabled = true
-shadow_blur = 0.54
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_uyrf3")
 
@@ -50,5 +45,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.334492, 7.37098, -4.36392)
 
 [node name="EvilMushroom" parent="." instance=ExtResource("3_uyrf3")]
 transform = Transform3D(0.998303, 0, 0.0582261, 0, 1, 0, -0.0582261, 0, 0.998303, 3.84563, 0, 1.86982)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.52866, 0.848833, 0, -0.848833, -0.52866, 0, 0, 0)
 
 [editable path="ProtoController"]
