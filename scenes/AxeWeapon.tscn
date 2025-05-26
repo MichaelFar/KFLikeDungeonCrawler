@@ -1,12 +1,12 @@
 [gd_scene load_steps=12 format=4 uid="uid://d3oc2fa4k2v5d"]
 
 [ext_resource type="Script" uid="uid://djmfsqrnpgkby" path="res://scripts/base_weapon.gd" id="1_8tiao"]
-[ext_resource type="Texture2D" uid="uid://c3nxqxhw43c4x" path="res://textures/BaseSword_SwordMaterial_BaseColor.png" id="2_n5s8n"]
+[ext_resource type="Texture2D" uid="uid://c3nxqxhw43c4x" path="res://textures/BaseSword/BaseSword_SwordMaterial_BaseColor.png" id="2_n5s8n"]
 [ext_resource type="Curve3D" uid="uid://dm32n58shc2o7" path="res://attack_curve_resources/AxeWeaponAttackCurve.tres" id="2_oeng5"]
-[ext_resource type="Texture2D" uid="uid://bs34q37d2dame" path="res://textures/BaseSword_SwordMaterial_Height.png" id="3_oeng5"]
-[ext_resource type="Texture2D" uid="uid://cgglbicx8o35s" path="res://textures/BaseSword_SwordMaterial_Metallic.png" id="4_1lffl"]
-[ext_resource type="Texture2D" uid="uid://cqkiv8e330f8m" path="res://textures/BaseSword_SwordMaterial_Normal.png" id="5_6tbnn"]
-[ext_resource type="Texture2D" uid="uid://lk3a4en3hnbu" path="res://textures/BaseSword_SwordMaterial_Roughness.png" id="6_baupo"]
+[ext_resource type="Texture2D" uid="uid://bs34q37d2dame" path="res://textures/BaseSword/BaseSword_SwordMaterial_Height.png" id="3_oeng5"]
+[ext_resource type="Texture2D" uid="uid://cgglbicx8o35s" path="res://textures/BaseSword/BaseSword_SwordMaterial_Metallic.png" id="4_1lffl"]
+[ext_resource type="Texture2D" uid="uid://cqkiv8e330f8m" path="res://textures/BaseSword/BaseSword_SwordMaterial_Normal.png" id="5_6tbnn"]
+[ext_resource type="Texture2D" uid="uid://lk3a4en3hnbu" path="res://textures/BaseSword/BaseSword_SwordMaterial_Roughness.png" id="6_baupo"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ekty5"]
 

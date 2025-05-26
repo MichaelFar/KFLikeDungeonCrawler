@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lk3a4en3hnbu"
-path.s3tc="res://.godot/imported/BaseSword_SwordMaterial_Roughness.png-3163a648203195d6d6fcad757221cb35.s3tc.ctex"
+uid="uid://bj7u4mc3phke3"
+path.s3tc="res://.godot/imported/MushroomEnemyFBX_EvilMushroomMaterial_Height.png-b096993993dd0117f194b76dc6c0cca0.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/BaseSword_SwordMaterial_Roughness.png"
-dest_files=["res://.godot/imported/BaseSword_SwordMaterial_Roughness.png-3163a648203195d6d6fcad757221cb35.s3tc.ctex"]
+source_file="res://textures/EvilMushroom/MushroomEnemyFBX_EvilMushroomMaterial_Height.png"
+dest_files=["res://.godot/imported/MushroomEnemyFBX_EvilMushroomMaterial_Height.png-b096993993dd0117f194b76dc6c0cca0.s3tc.ctex"]
 
 [params]
 
@@ -24,8 +24,8 @@ compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=0
-roughness/src_normal=""
+roughness/mode=7
+roughness/src_normal="res://textures/EvilMushroom/MushroomEnemyFBX_EvilMushroomMaterial_Normal.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

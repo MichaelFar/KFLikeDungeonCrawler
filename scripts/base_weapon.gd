@@ -32,15 +32,33 @@ class_name BaseWeapon
 @export var attackCurve : Resource
 @export var blockCurve : Resource
 
+@export var hitBox : Area3D
+
 var globalTween : Tween
 
 var canBlock : bool = true
 
-var canReleaseBlock : bool = false
-
 enum WeaponStates {ATTACKING, BLOCKING, RESTING}#Not really a state machine, will be checked by weapon holder
 
-var weaponState : WeaponStates = WeaponStates.RESTING
+var weaponState : WeaponStates :
+	
+		get:
+			
+			return weaponState
+			
+		set(value):
+			
+			weaponState = value
+			
+			for i in hitBox.get_children():
+						i.disabled = true
+			
+			match value :
+				
+				WeaponStates.ATTACKING:
+					for i in hitBox.get_children():
+						i.disabled = false
+	
 
 func _ready() -> void:
 	swingCoolDownTimer.wait_time = swingCooldown
@@ -94,6 +112,8 @@ func return_weapon():
 	
 	canBlock = true
 	
+	weaponState = WeaponStates.RESTING
+	
 	if(globalTween != null):
 		
 		if(globalTween.is_running()):
@@ -118,7 +138,7 @@ func block_with_weapon():
 	
 	weaponState = WeaponStates.BLOCKING
 	
-	canReleaseBlock = false
+	
 	
 	if(!swingCoolDownTimer.is_stopped() || !canBlock):
 		
@@ -141,12 +161,8 @@ func block_with_weapon():
 	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:x", -60, swingSpeed)
 	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:y", 90.0, swingSpeed)
 	tween.parallel().tween_property(weaponPathFollow, "progress_ratio", 0.0, swingSpeed)
-	tween.finished.connect(set_can_release.bind(true))
 	
-func set_can_release(new_value : bool):
 	
-	canReleaseBlock = new_value
-
 func _on_hit_box_body_entered(body: Node3D) -> void:
 	if(body is PhysicsProp):
 		var modified_camera_direction : Vector3 = Vector3(Global.camera.get_global_transform().basis.z.x, 0, Global.camera.get_global_transform().basis.z.z)

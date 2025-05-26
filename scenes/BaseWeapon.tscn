@@ -1,13 +1,13 @@
 [gd_scene load_steps=15 format=4 uid="uid://b1jveyo7lda5m"]
 
 [ext_resource type="Script" uid="uid://djmfsqrnpgkby" path="res://scripts/base_weapon.gd" id="1_kjhvj"]
-[ext_resource type="Texture2D" uid="uid://c3nxqxhw43c4x" path="res://textures/BaseSword_SwordMaterial_BaseColor.png" id="2_ekty5"]
+[ext_resource type="Texture2D" uid="uid://c3nxqxhw43c4x" path="res://textures/BaseSword/BaseSword_SwordMaterial_BaseColor.png" id="2_ekty5"]
 [ext_resource type="Curve3D" uid="uid://dqrppbi1njpud" path="res://attack_curve_resources/BaseWeaponCurve.tres" id="2_kwyxs"]
 [ext_resource type="Curve3D" uid="uid://bjnvl8l50bc37" path="res://attack_curve_resources/BaseWeaponBlockCurve.tres" id="3_41tij"]
-[ext_resource type="Texture2D" uid="uid://bs34q37d2dame" path="res://textures/BaseSword_SwordMaterial_Height.png" id="3_kwyxs"]
-[ext_resource type="Texture2D" uid="uid://cgglbicx8o35s" path="res://textures/BaseSword_SwordMaterial_Metallic.png" id="4_41tij"]
-[ext_resource type="Texture2D" uid="uid://cqkiv8e330f8m" path="res://textures/BaseSword_SwordMaterial_Normal.png" id="5_rihcx"]
-[ext_resource type="Texture2D" uid="uid://lk3a4en3hnbu" path="res://textures/BaseSword_SwordMaterial_Roughness.png" id="6_lbx0t"]
+[ext_resource type="Texture2D" uid="uid://bs34q37d2dame" path="res://textures/BaseSword/BaseSword_SwordMaterial_Height.png" id="3_kwyxs"]
+[ext_resource type="Texture2D" uid="uid://cgglbicx8o35s" path="res://textures/BaseSword/BaseSword_SwordMaterial_Metallic.png" id="4_41tij"]
+[ext_resource type="Texture2D" uid="uid://cqkiv8e330f8m" path="res://textures/BaseSword/BaseSword_SwordMaterial_Normal.png" id="5_rihcx"]
+[ext_resource type="Texture2D" uid="uid://lk3a4en3hnbu" path="res://textures/BaseSword/BaseSword_SwordMaterial_Roughness.png" id="6_lbx0t"]
 [ext_resource type="Script" uid="uid://c5744uu0aj45" path="res://scripts/hit_box.gd" id="9_rihcx"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ekty5"]
@@ -20,7 +20,6 @@ roughness_texture = ExtResource("6_lbx0t")
 normal_enabled = true
 normal_scale = -1.05
 normal_texture = ExtResource("5_rihcx")
-heightmap_enabled = true
 heightmap_texture = ExtResource("3_kwyxs")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_5md78"]
@@ -60,7 +59,7 @@ shadow_mesh = SubResource("ArrayMesh_5md78")
 radius = 0.1
 height = 0.930664
 
-[node name="BaseWeapon" type="Node3D" node_paths=PackedStringArray("weaponMesh", "weaponPivot", "weaponPathFollow", "swingCoolDownTimer", "weaponPath3D", "blockRotationNode")]
+[node name="BaseWeapon" type="Node3D" node_paths=PackedStringArray("weaponMesh", "weaponPivot", "weaponPathFollow", "swingCoolDownTimer", "weaponPath3D", "blockRotationNode", "hitBox")]
 script = ExtResource("1_kjhvj")
 yWeaponSway = 0.8
 xWeaponSway = 0.8
@@ -84,6 +83,7 @@ weaponPath3D = NodePath("BlockRotationParent/pivotPoint/Path3D")
 blockRotationNode = NodePath("BlockRotationParent")
 attackCurve = ExtResource("2_kwyxs")
 blockCurve = ExtResource("3_41tij")
+hitBox = NodePath("BlockRotationParent/pivotPoint/Path3D/PathFollow3D/HitBox")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.451709, 0, 0, 0, 0.681579, 0, 0, 0, 0.333393, 0, 0, 0.393292)
@@ -101,7 +101,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.288024, -0.131764, 1.39405)
 curve = ExtResource("2_kwyxs")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="BlockRotationParent/pivotPoint/Path3D"]
-transform = Transform3D(0.999852, 0.000208944, 0.00039912, 0, 0.885886, -0.463744, -0.000450478, 0.463758, 0.88586, 0.000286372, 0.204488, -0.534883)
+transform = Transform3D(0.999852, 0.000208944, 0.00039912, 0, 0.885886, -0.463744, -0.000450479, 0.463758, 0.88586, 0.000286372, 0.204488, -0.534883)
 
 [node name="SwordModel" type="MeshInstance3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D"]
 transform = Transform3D(0.508464, -3.67102e-11, -0.000210795, 0.000106248, 0.319283, 0.216992, 0.000202958, -0.167143, 0.414505, -0.000147435, -0.541645, 0.151548)

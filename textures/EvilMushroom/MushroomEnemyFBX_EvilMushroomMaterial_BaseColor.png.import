@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgglbicx8o35s"
-path.s3tc="res://.godot/imported/BaseSword_SwordMaterial_Metallic.png-608ac5c4fbb1698f561dcca52a58ae03.s3tc.ctex"
+uid="uid://bqs6osa0x74is"
+path.s3tc="res://.godot/imported/MushroomEnemyFBX_EvilMushroomMaterial_BaseColor.png-75fe3b852edca8016db751ccf1e08489.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/BaseSword_SwordMaterial_Metallic.png"
-dest_files=["res://.godot/imported/BaseSword_SwordMaterial_Metallic.png-608ac5c4fbb1698f561dcca52a58ae03.s3tc.ctex"]
+source_file="res://textures/EvilMushroom/MushroomEnemyFBX_EvilMushroomMaterial_BaseColor.png"
+dest_files=["res://.godot/imported/MushroomEnemyFBX_EvilMushroomMaterial_BaseColor.png-75fe3b852edca8016db751ccf1e08489.s3tc.ctex"]
 
 [params]
 

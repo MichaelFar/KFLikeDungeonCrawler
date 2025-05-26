@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bs34q37d2dame"
-path.s3tc="res://.godot/imported/BaseSword_SwordMaterial_Height.png-1608687f49a5741a0c7ee226fbf76a1a.s3tc.ctex"
+path.s3tc="res://.godot/imported/BaseSword_SwordMaterial_Height.png-1f31f4080f73cf2c0a713697b1b3c67d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/BaseSword_SwordMaterial_Height.png"
-dest_files=["res://.godot/imported/BaseSword_SwordMaterial_Height.png-1608687f49a5741a0c7ee226fbf76a1a.s3tc.ctex"]
+source_file="res://textures/BaseSword/BaseSword_SwordMaterial_Height.png"
+dest_files=["res://.godot/imported/BaseSword_SwordMaterial_Height.png-1f31f4080f73cf2c0a713697b1b3c67d.s3tc.ctex"]
 
 [params]
 
