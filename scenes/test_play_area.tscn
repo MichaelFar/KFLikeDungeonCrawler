@@ -43,10 +43,10 @@ shape = SubResource("WorldBoundaryShape3D_23u8n")
 [node name="box_prop" parent="." instance=ExtResource("2_nqmnh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.334492, 7.37098, -4.36392)
 
-[node name="EvilMushroom" parent="." instance=ExtResource("3_uyrf3")]
-transform = Transform3D(0.998303, 0, 0.0582261, 0, 1, 0, -0.0582261, 0, 0.998303, 3.84563, 0, 1.86982)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.52866, 0.848833, 0, -0.848833, -0.52866, 0, 0, 0)
+
+[node name="EvilMushroom" parent="." instance=ExtResource("3_uyrf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75595, 0, 1.30363)
 
 [editable path="ProtoController"]

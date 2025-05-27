@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=4 uid="uid://wkc70xcqwhns"]
+[gd_scene load_steps=11 format=4 uid="uid://wkc70xcqwhns"]
 
+[ext_resource type="Script" uid="uid://b14jdqksl2ign" path="res://scripts/base_enemy.gd" id="1_46pwp"]
 [ext_resource type="Texture2D" uid="uid://bqs6osa0x74is" path="res://textures/EvilMushroom/MushroomEnemyFBX_EvilMushroomMaterial_BaseColor.png" id="1_fj4c4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8e7sf"]
@@ -37,32 +38,6 @@ bind/2/name = &"Bone.001"
 bind/2/bone = -1
 bind/2/pose = Transform3D(0.998125, -0.0139273, 8.44401e-08, 0.0139273, 0.998125, -1.34329e-07, -8.23434e-08, 1.35269e-07, 0.998222, 0.0279862, -2.00568, -2.71848e-07)
 
-[sub_resource type="Animation" id="Animation_fj4c4"]
-resource_name = "mushroom_idle"
-length = 3.0
-loop_mode = 1
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Armature2/Skeleton3D:Bone.001")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, -5.48653e-17, 1, 4.33681e-19, 1.43333, 1, -0.000489675, 0.964907, 4.72538e-09, 3, 1, -5.48653e-17, 1, 4.33681e-19)
-tracks/1/type = "rotation_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Armature2/Skeleton3D:Bone.001")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, -6.75431e-08, -3.18454e-08, -0.00697623, 0.999976, 0.7, 1, -0.0429037, -0.000269075, -0.0202033, 0.998875, 1.9, 1, -0.0428739, 0.00162169, 0.0238307, 0.998795, 3, 1, -6.75431e-08, -3.18454e-08, -0.00697623, 0.999976)
-tracks/2/type = "position_3d"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Armature2/Skeleton3D:Bone")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = PackedFloat32Array(0, 1, -1.42626e-14, 0.983591, -3.6993e-16, 1.96667, 1, 1.54712e-08, 0.925961, -0.000127501, 3, 1, -1.42626e-14, 0.983591, -3.6993e-16)
-
 [sub_resource type="Animation" id="Animation_nmvgs"]
 length = 0.001
 tracks/0/type = "position_3d"
@@ -89,6 +64,7 @@ tracks/2/keys = PackedFloat32Array(0, 1, -0.000782268, 0.707128, 0.000782117, 0.
 
 [sub_resource type="Animation" id="Animation_8e7sf"]
 resource_name = "mushroom_attack"
+loop_mode = 1
 tracks/0/type = "rotation_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -96,6 +72,32 @@ tracks/0/path = NodePath("Armature2/Skeleton3D:Bone.002")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, -0.000782268, 0.707128, 0.000782117, 0.707085, 0.395366, 1, 0.168531, 0.686751, 0.17004, 0.686335, 0.65119, 1, -0.287828, 0.645899, -0.286381, 0.646495, 0.966667, 1, -0.000782268, 0.707128, 0.000782117, 0.707085)
+
+[sub_resource type="Animation" id="Animation_fj4c4"]
+resource_name = "mushroom_idle"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Armature2/Skeleton3D:Bone.001")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -5.48653e-17, 1, 4.33681e-19, 1.43333, 1, -0.000489675, 0.964907, 4.72538e-09, 3, 1, -5.48653e-17, 1, 4.33681e-19)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Armature2/Skeleton3D:Bone.001")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, -6.75431e-08, -3.18454e-08, -0.00697623, 0.999976, 0.7, 1, -0.0429037, -0.000269075, -0.0202033, 0.998875, 1.9, 1, -0.0428739, 0.00162169, 0.0238307, 0.998795, 3, 1, -6.75431e-08, -3.18454e-08, -0.00697623, 0.999976)
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Armature2/Skeleton3D:Bone")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, -1.42626e-14, 0.983591, -3.6993e-16, 1.96667, 1, 1.54712e-08, 0.925961, -0.000127501, 3, 1, -1.42626e-14, 0.983591, -3.6993e-16)
 
 [sub_resource type="Animation" id="Animation_46pwp"]
 resource_name = "mushroom_move"
@@ -123,7 +125,15 @@ _data = {
 &"mushroom_move": SubResource("Animation_46pwp")
 }
 
-[node name="EvilMushroom" type="Node3D"]
+[node name="EvilMushroom" type="Node3D" node_paths=PackedStringArray("animationPlayer", "navAgent")]
+script = ExtResource("1_46pwp")
+animationPlayer = NodePath("AnimationPlayer")
+navAgent = NodePath("NavigationAgent3D")
+animationDict = {
+"attacking": "mushroom_attack",
+"idling": "mushroom_idle",
+"moving": "mushroom_move"
+}
 
 [node name="Armature2" type="Node3D" parent="."]
 transform = Transform3D(1.00178, 0, 0, 0, 1.00178, 0, 0, 0, 1.00178, 0, 1.00766, 0)
@@ -148,7 +158,7 @@ bones/2/parent = 1
 bones/2/rest = Transform3D(0.999903, 0.0139521, -6.27468e-08, -0.0139521, 0.999903, 1.35527e-07, 6.46316e-08, -1.34639e-07, 1, -5.48653e-17, 1, 4.33681e-19)
 bones/2/enabled = true
 bones/2/position = Vector3(-5.48653e-17, 1, 4.33681e-19)
-bones/2/rotation = Quaternion(-6.75431e-08, -3.18454e-08, -0.00697623, 0.999976)
+bones/2/rotation = Quaternion(-6.75433e-08, -3.18454e-08, -0.00697622, 0.999976)
 bones/2/scale = Vector3(1, 1, 1)
 
 [node name="EvilMushroom" type="MeshInstance3D" parent="Armature2/Skeleton3D"]
@@ -181,3 +191,5 @@ settings/0/exclude_collision_count = 0
 libraries = {
 &"": SubResource("AnimationLibrary_bsye1")
 }
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
