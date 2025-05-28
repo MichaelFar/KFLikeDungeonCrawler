@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cvn2a5ou7chay"]
+[gd_scene load_steps=11 format=3 uid="uid://cvn2a5ou7chay"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://scenes/proto_controller.tscn" id="1_23u8n"]
 [ext_resource type="PackedScene" uid="uid://bvqivjlt6robm" path="res://scenes/test_box_prop.tscn" id="2_nqmnh"]
@@ -24,6 +24,11 @@ size = Vector2(30, 30)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_23u8n"]
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_uyrf3"]
+vertices = PackedVector3Array(-14.5, 0.5, -14.5, -14.5, 0.5, 14.5, 14.5, 0.5, 14.5, 14.5, 0.5, -14.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+geometry_parsed_geometry_type = 0
+
 [node name="TestPlayArea" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -34,12 +39,6 @@ mesh = SubResource("PlaneMesh_23u8n")
 
 [node name="ProtoController" parent="." instance=ExtResource("1_23u8n")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("WorldBoundaryShape3D_23u8n")
-
 [node name="box_prop" parent="." instance=ExtResource("2_nqmnh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.334492, 7.37098, -4.36392)
 
@@ -48,5 +47,13 @@ transform = Transform3D(1, 0, 0, 0, -0.52866, 0.848833, 0, -0.848833, -0.52866, 
 
 [node name="EvilMushroom" parent="." instance=ExtResource("3_uyrf3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75595, 0, 1.30363)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_23u8n")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_uyrf3")
 
 [editable path="ProtoController"]

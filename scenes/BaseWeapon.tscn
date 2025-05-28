@@ -101,7 +101,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.288024, -0.131764, 1.39405)
 curve = ExtResource("2_kwyxs")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="BlockRotationParent/pivotPoint/Path3D"]
-transform = Transform3D(0.999852, 0.000208944, 0.00039912, 0, 0.885886, -0.463744, -0.000450479, 0.463758, 0.88586, 0.000286372, 0.204488, -0.534883)
+transform = Transform3D(0.999852, 0.000208944, 0.00039912, 0, 0.885886, -0.463744, -0.000450478, 0.463758, 0.88586, 0.000286372, 0.204488, -0.534883)
 
 [node name="SwordModel" type="MeshInstance3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D"]
 transform = Transform3D(0.508464, -3.67102e-11, -0.000210795, 0.000106248, 0.319283, 0.216992, 0.000202958, -0.167143, 0.414505, -0.000147435, -0.541645, 0.151548)

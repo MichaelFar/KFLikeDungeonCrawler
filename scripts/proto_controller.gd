@@ -61,10 +61,13 @@ signal Stopped
 var isMoving : bool = false
 
 func _ready() -> void:
+	
 	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
 	Global.camera = camera
+	Global.player = self
+	
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
