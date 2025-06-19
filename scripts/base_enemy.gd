@@ -33,6 +33,7 @@ var enemyState : EnemyStates  : #Handles initial settings for switching states a
 			match value:
 				
 				EnemyStates.WANDERING:
+					
 					animationPlayer.play(animationDict["moving"])
 					set_process(true)
 					WanderTimer.start()
@@ -47,7 +48,7 @@ var enemyState : EnemyStates  : #Handles initial settings for switching states a
 					pass
 					
 				EnemyStates.IDLING:
-					
+					velocity = Vector3.ZERO
 					set_process(false)
 					idle_state()
 					print("In idle state")
@@ -113,8 +114,10 @@ func move_to_point(destination : Vector3, delta):
 	navAgent.target_position = destination
 	var direction = navAgent.get_next_path_position() - global_position
 	var target: Basis = Basis.looking_at(direction)
-
+	direction = direction.normalized()
 	# if in _process
 	basis = basis.slerp(target, delta)
-	velocity = velocity.move_toward(direction, delta * speed)
-	
+	velocity = direction * speed
+
+func set_speed(new_speed : float):
+	speed = new_speed
