@@ -8,7 +8,13 @@ class_name BaseEnemy
 
 @export var IdleTimer : Timer
 
+@export var WanderTimer : Timer
+
 @export var wanderRegion : WanderRegion
+
+@export var speed : float
+
+@export var meshParent : Node3D
 
 @export var animationDict = {
 	"moving": "",
@@ -27,8 +33,16 @@ var enemyState : EnemyStates  : #Handles initial settings for switching states a
 			match value:
 				
 				EnemyStates.WANDERING:
-					
+					animationPlayer.play(animationDict["moving"])
 					set_process(true)
+					WanderTimer.start()
+					
+					for i in navAgent.navigation_finished.get_connections():
+						
+						navAgent.navigation_finished.disconnect(i["callable"])
+					
+					navAgent.navigation_finished.connect(change_state.bind(EnemyStates.IDLING))
+					
 					print("In wander state")
 					pass
 					
@@ -53,6 +67,12 @@ var destinationPoint : Vector3
 
 func _ready() -> void:
 	
+	
+	IdleTimer.timeout.connect(change_state.bind(EnemyStates.WANDERING))
+	WanderTimer.timeout.connect(change_state.bind(EnemyStates.IDLING))
+	
+	await get_tree().physics_frame
+	
 	enemyState = EnemyStates.IDLING
 	
 func _physics_process(delta: float) -> void:
@@ -61,7 +81,7 @@ func _physics_process(delta: float) -> void:
 		
 		EnemyStates.WANDERING:
 					
-			pass
+			move_to_point(destinationPoint, delta)
 					
 		EnemyStates.IDLING:
 			
@@ -74,6 +94,7 @@ func _physics_process(delta: float) -> void:
 		EnemyStates.ATTACKING:
 			pass
 		
+	move_and_slide()
 	
 func change_state(new_state : EnemyStates):
 	
@@ -85,8 +106,15 @@ func idle_state():
 	
 	animationPlayer.play(animationDict["idling"])
 	IdleTimer.start()
-	IdleTimer.timeout.connect(change_state.bind(EnemyStates.WANDERING))
 	
-func move_to_point(destination : Vector3):
+	
+func move_to_point(destination : Vector3, delta):
 	
 	navAgent.target_position = destination
+	var direction = navAgent.get_next_path_position() - global_position
+	var target: Basis = Basis.looking_at(direction)
+
+	# if in _process
+	basis = basis.slerp(target, delta)
+	velocity = velocity.move_toward(direction, delta * speed)
+	

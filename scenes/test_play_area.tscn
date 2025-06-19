@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cvn2a5ou7chay"]
+[gd_scene load_steps=13 format=3 uid="uid://cvn2a5ou7chay"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://scenes/proto_controller.tscn" id="1_23u8n"]
 [ext_resource type="PackedScene" uid="uid://bvqivjlt6robm" path="res://scenes/test_box_prop.tscn" id="2_nqmnh"]
@@ -16,22 +16,26 @@ sky = SubResource("Sky_23u8n")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_xs7jo"]
-size = Vector2(100, 100)
-
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_23u8n"]
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_vhnsk"]
+size = Vector2(20, 10)
+
 [sub_resource type="NavigationMesh" id="NavigationMesh_uyrf3"]
-vertices = PackedVector3Array(15, 0, 15, -15, 0, 15, 15, 0, -15, -15, 0, -15)
-polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(1, 3, 2)]
+vertices = PackedVector3Array(-49.5, 0.5, -49.5, -49.5, 0.5, 49.5, 49.5, 0.5, 49.5, 49.5, 0.5, -49.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xs7jo"]
+albedo_color = Color(0.186808, 0.107838, 0.065341, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xs7jo"]
+material = SubResource("StandardMaterial3D_xs7jo")
+size = Vector2(100, 100)
 
 [node name="TestPlayArea" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_uyrf3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("PlaneMesh_xs7jo")
 
 [node name="ProtoController" parent="." instance=ExtResource("1_23u8n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0533447, 0, -0.00209427)
@@ -52,8 +56,18 @@ wanderRegion = NodePath("../WanderRegion")
 shape = SubResource("WorldBoundaryShape3D_23u8n")
 
 [node name="WanderRegion" parent="." instance=ExtResource("4_xs7jo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3527, 0.076347, -6.88109)
-mesh = null
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.7409, 0, -35.9337)
+mesh = SubResource("PlaneMesh_vhnsk")
+
+[node name="MeshInstance3D" parent="WanderRegion" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.139453, 0)
+mesh = SubResource("PlaneMesh_vhnsk")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_uyrf3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+mesh = SubResource("PlaneMesh_xs7jo")
+skeleton = NodePath("../..")
+
+[editable path="WanderRegion"]

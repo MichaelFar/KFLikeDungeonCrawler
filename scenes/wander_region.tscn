@@ -6,8 +6,9 @@
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ltwyo"]
 
-[node name="WanderRegion" type="Node3D"]
+[node name="WanderRegion" type="Node3D" node_paths=PackedStringArray("meshBoundary")]
 script = ExtResource("1_ltwyo")
+meshBoundary = NodePath("MeshInstance3D")
 mesh = SubResource("PlaneMesh_k11d0")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
