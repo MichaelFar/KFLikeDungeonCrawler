@@ -61,7 +61,6 @@ signal Stopped
 var isMoving : bool = false
 
 func _ready() -> void:
-	
 	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x

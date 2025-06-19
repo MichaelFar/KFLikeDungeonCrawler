@@ -138,8 +138,6 @@ func block_with_weapon():
 	
 	weaponState = WeaponStates.BLOCKING
 	
-	
-	
 	if(!swingCoolDownTimer.is_stopped() || !canBlock):
 		
 		print("Timer exists aborting swing")

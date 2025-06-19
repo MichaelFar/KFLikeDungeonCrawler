@@ -42,8 +42,4 @@ weapon = NodePath("BaseWeapon")
 playerController = NodePath("../..")
 
 [node name="BaseWeapon" parent="Head/WeaponHolder" instance=ExtResource("3_h1xqo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.791535)
-yWeaponSway = 1.0
-xWeaponSway = 1.0
-yWeaponRotation = 85.51
-xWeaponRotation = 27.18
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0733162, 0.120085, 0.750611)

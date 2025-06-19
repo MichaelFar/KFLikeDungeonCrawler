@@ -84,7 +84,7 @@ transform = Transform3D(1, 0, 0, 0, 0.960289, 0.279007, 0, -0.279007, 0.960289, 
 curve = ExtResource("2_oeng5")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="pivotPoint/Path3D"]
-transform = Transform3D(0.999961, 0.00147886, 0.00197022, -1.16411e-10, 0.799664, -0.600236, -0.00246372, 0.600232, 0.799664, 0.00030303, 0.327831, -0.499681)
+transform = Transform3D(0.999959, 0.00147886, 0.00197022, -1.16411e-10, 0.799664, -0.600236, -0.00246371, 0.600232, 0.799663, 0.00030303, 0.327831, -0.499681)
 
 [node name="SwordModel" type="MeshInstance3D" parent="pivotPoint/Path3D/PathFollow3D"]
 transform = Transform3D(0.522934, 0, 0, 0, 0.479844, 0.168651, 0, -0.156781, 0.516174, -3.63798e-12, -0.931602, 0.388556)

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://st7k2s4583i6"]
+
+[ext_resource type="Script" uid="uid://b14jdqksl2ign" path="res://scripts/base_enemy.gd" id="1_h4tgi"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("animationPlayer")]
+script = ExtResource("1_h4tgi")
+animationPlayer = NodePath("AnimationPlayer")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://dv2fcnbp851kb"]
+
+[ext_resource type="Script" uid="uid://dpsmur4aj0j3l" path="res://scripts/wander_region.gd" id="1_ltwyo"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_k11d0"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ltwyo"]
+
+[node name="WanderRegion" type="Node3D"]
+script = ExtResource("1_ltwyo")
+mesh = SubResource("PlaneMesh_k11d0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_ltwyo")
