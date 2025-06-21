@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://csfp8kk8txre0"]
+
+[ext_resource type="Shader" uid="uid://n35s6xh71x5c" path="res://shaders/trail.gdshader" id="1_pwdqv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gsjm6"]
+render_priority = 0
+shader = ExtResource("1_pwdqv")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_q5wo6"]
+material = SubResource("ShaderMaterial_gsjm6")
+
+[node name="Node3D" type="GPUParticles3D"]
+amount = 16
+lifetime = 0.01
+draw_pass_1 = SubResource("PlaneMesh_q5wo6")

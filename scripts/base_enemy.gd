@@ -72,7 +72,6 @@ var destinationPoint : Vector3
 
 func _ready() -> void:
 	
-	
 	IdleTimer.timeout.connect(change_state.bind(EnemyStates.WANDERING))
 	WanderTimer.timeout.connect(change_state.bind(EnemyStates.IDLING))
 	
@@ -122,6 +121,6 @@ func move_to_point(destination : Vector3, delta):
 	
 	basis = basis.slerp(target, delta)
 	velocity = direction * speed
-	print("moving")
+	
 func set_speed(new_speed : float):
 	speed = new_speed

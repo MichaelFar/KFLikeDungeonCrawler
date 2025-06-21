@@ -26,6 +26,8 @@ class_name BaseWeapon
 @export var weaponPathFollow : PathFollow3D
 @export var swingCoolDownTimer : Timer
 @export var weaponPath3D : Path3D
+@export var trailMesh : Trail3D
+
 
 @export var blockRotationNode : Node3D
 
@@ -52,17 +54,18 @@ var weaponState : WeaponStates :
 			
 			for i in hitBox.get_children():
 						i.disabled = true
-			
+			trailMesh.trailEnabled = false
 			match value :
 				
 				WeaponStates.ATTACKING:
+					trailMesh.trailEnabled = true
 					for i in hitBox.get_children():
 						i.disabled = false
 	
 
 func _ready() -> void:
 	swingCoolDownTimer.wait_time = swingCooldown
-
+	trailMesh.trailEnabled = false
 func swing_weapon():
 	
 	weaponState = WeaponStates.ATTACKING
