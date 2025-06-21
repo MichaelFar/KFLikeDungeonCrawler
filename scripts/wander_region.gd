@@ -20,7 +20,7 @@ class_name WanderRegion
 var meshCornerPoints : PackedVector3Array
 
 func _ready() -> void:
-	print(meshBoundary.global_transform * remove_duplicate_points_on_polygon())
+	#print(meshBoundary.global_transform * remove_duplicate_points_on_polygon())
 	meshCornerPoints = meshBoundary.global_transform * remove_duplicate_points_on_polygon()
 func remove_duplicate_points_on_polygon() -> PackedVector3Array:
 	
@@ -49,6 +49,6 @@ func generate_point_in_region(points : PackedVector3Array) -> Vector3:
 	min_z = points[0].z
 	max_x = points[points.size() - 1].x
 	max_z = points[points.size() - 1].z
-	print(points)
+	#print(points)
 	return Vector3(randobj.randf_range(min_x,max_x), 0, randobj.randf_range(min_z,max_z))
 	

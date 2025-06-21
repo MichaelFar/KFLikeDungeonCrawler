@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cgglbicx8o35s" path="res://textures/BaseSword/BaseSword_SwordMaterial_Metallic.png" id="4_41tij"]
 [ext_resource type="Texture2D" uid="uid://cqkiv8e330f8m" path="res://textures/BaseSword/BaseSword_SwordMaterial_Normal.png" id="5_rihcx"]
 [ext_resource type="Texture2D" uid="uid://lk3a4en3hnbu" path="res://textures/BaseSword/BaseSword_SwordMaterial_Roughness.png" id="6_lbx0t"]
+[ext_resource type="PackedScene" uid="uid://ble62hlaj1nf7" path="res://scenes/hit_box.tscn" id="9_rihcx"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ekty5"]
 
@@ -53,10 +54,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_5md78")
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_41tij"]
-radius = 0.1
-height = 0.930664
 
 [node name="BaseWeapon" type="Node3D" node_paths=PackedStringArray("weaponMesh", "weaponPivot", "weaponPathFollow", "swingCoolDownTimer", "weaponPath3D", "blockRotationNode", "hitBox")]
 script = ExtResource("1_kjhvj")
@@ -107,12 +104,8 @@ transform = Transform3D(0.508464, -3.67102e-11, -0.000210795, 0.000106248, 0.319
 mesh = SubResource("ArrayMesh_xc2hr")
 skeleton = NodePath("../../../../..")
 
-[node name="HitBox" type="Area3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D"]
-transform = Transform3D(1, -9.02219e-10, -0.000450546, 0.000208959, 0.885946, 0.463788, 0.000399159, -0.463788, 0.885946, -0.000147435, 0.3195, -0.299257)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D/HitBox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.52298e-17, -0.139472, -2.27374e-13)
-shape = SubResource("CapsuleShape3D_41tij")
+[node name="HitBox" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D" instance=ExtResource("9_rihcx")]
+transform = Transform3D(1, -1.22236e-09, -0.000450546, 0.000208959, 0.885946, 0.463788, 0.000399159, -0.463788, 0.885946, -0.000147435, 0.3195, -0.299257)
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true

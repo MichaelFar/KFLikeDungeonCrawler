@@ -45,11 +45,15 @@ var enemyState : EnemyStates  : #Handles initial settings for switching states a
 					navAgent.navigation_finished.connect(change_state.bind(EnemyStates.IDLING))
 					
 					print("In wander state")
-					pass
+					
 					
 				EnemyStates.IDLING:
-					velocity = Vector3.ZERO
+					WanderTimer.stop()
+					await get_tree().physics_frame
 					set_process(false)
+					#speed = 0
+					velocity = Vector3.ZERO
+					
 					idle_state()
 					print("In idle state")
 					
@@ -115,9 +119,9 @@ func move_to_point(destination : Vector3, delta):
 	var direction = navAgent.get_next_path_position() - global_position
 	var target: Basis = Basis.looking_at(direction)
 	direction = direction.normalized()
-	# if in _process
+	
 	basis = basis.slerp(target, delta)
 	velocity = direction * speed
-
+	print("moving")
 func set_speed(new_speed : float):
 	speed = new_speed

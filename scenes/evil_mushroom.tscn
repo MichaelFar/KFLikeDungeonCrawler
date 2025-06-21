@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=4 uid="uid://wkc70xcqwhns"]
+[gd_scene load_steps=14 format=4 uid="uid://wkc70xcqwhns"]
 
 [ext_resource type="Script" uid="uid://b14jdqksl2ign" path="res://scripts/base_enemy.gd" id="1_46pwp"]
 [ext_resource type="Texture2D" uid="uid://bqs6osa0x74is" path="res://textures/EvilMushroom/MushroomEnemyFBX_EvilMushroomMaterial_BaseColor.png" id="1_fj4c4"]
+[ext_resource type="PackedScene" uid="uid://ble62hlaj1nf7" path="res://scenes/hit_box.tscn" id="3_fj4c4"]
 
 [sub_resource type="Animation" id="Animation_nmvgs"]
 length = 0.001
@@ -145,6 +146,10 @@ bind/2/name = &"Bone.001"
 bind/2/bone = -1
 bind/2/pose = Transform3D(0.998125, -0.0139273, 8.44401e-08, 0.0139273, 0.998125, -1.34329e-07, -8.23434e-08, 1.35269e-07, 0.998222, 0.0279862, -2.00568, -2.71848e-07)
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nmvgs"]
+height = 0.995972
+radius = 1.31641
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_46pwp"]
 radius = 5.65625
 
@@ -154,7 +159,6 @@ animationPlayer = NodePath("AnimationPlayer")
 navAgent = NodePath("NavigationAgent3D")
 IdleTimer = NodePath("IdleTimer")
 WanderTimer = NodePath("WanderTimer")
-speed = 10.0
 meshParent = NodePath("Armature2")
 animationDict = {
 "attacking": "mushroom_attack",
@@ -225,12 +229,25 @@ settings/0/gravity/direction = Vector3(0, -1, 0)
 settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature2/Skeleton3D"]
+transform = Transform3D(0.999899, 0.0142255, 8.87411e-05, -0.0142255, 0.999899, 0.00016529, -8.64325e-05, -0.000166536, 1, 0.000273462, 1, -0.00016519)
+bone_name = "Bone.001"
+bone_idx = 2
+
+[node name="HitBox" parent="Armature2/Skeleton3D/BoneAttachment3D" instance=ExtResource("3_fj4c4")]
+
+[node name="CollisionShape3D" parent="Armature2/Skeleton3D/BoneAttachment3D/HitBox" index="0"]
+transform = Transform3D(1, 2.23633e-07, 1.22498e-07, -5.87897e-08, 0.891015, -0.453975, -4.97676e-09, 0.453975, 0.891015, 6.70552e-08, 0.415907, 0.282968)
+shape = SubResource("CylinderShape3D_nmvgs")
+
+[node name="DetectionZone" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54215, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionZone"]
 shape = SubResource("CylinderShape3D_46pwp")
 
 [node name="WanderTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[editable path="Armature2/Skeleton3D/BoneAttachment3D/HitBox"]

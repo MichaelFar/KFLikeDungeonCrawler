@@ -56,7 +56,7 @@ wanderRegion = NodePath("../WanderRegion")
 shape = SubResource("WorldBoundaryShape3D_23u8n")
 
 [node name="WanderRegion" parent="." instance=ExtResource("4_xs7jo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.7409, 0, -35.9337)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1568, 0, 12.9215)
 mesh = SubResource("PlaneMesh_vhnsk")
 
 [node name="MeshInstance3D" parent="WanderRegion" index="0"]

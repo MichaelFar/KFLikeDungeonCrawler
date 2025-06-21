@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://ble62hlaj1nf7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_41tij"]
+radius = 0.1
+height = 0.930664
+
+[node name="HitBox" type="Area3D"]
+transform = Transform3D(1, -9.02219e-10, -0.000450546, 0.000208959, 0.885946, 0.463788, 0.000399159, -0.463788, 0.885946, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.52298e-17, -0.139472, -2.27374e-13)
+shape = SubResource("CapsuleShape3D_41tij")
