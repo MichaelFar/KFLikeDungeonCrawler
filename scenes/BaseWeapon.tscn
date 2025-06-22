@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://b1jveyo7lda5m"]
+[gd_scene load_steps=18 format=4 uid="uid://b1jveyo7lda5m"]
 
 [ext_resource type="Script" uid="uid://djmfsqrnpgkby" path="res://scripts/base_weapon.gd" id="1_kjhvj"]
 [ext_resource type="Texture2D" uid="uid://c3nxqxhw43c4x" path="res://textures/BaseSword/BaseSword_SwordMaterial_BaseColor.png" id="2_ekty5"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cqkiv8e330f8m" path="res://textures/BaseSword/BaseSword_SwordMaterial_Normal.png" id="5_rihcx"]
 [ext_resource type="Texture2D" uid="uid://lk3a4en3hnbu" path="res://textures/BaseSword/BaseSword_SwordMaterial_Roughness.png" id="6_lbx0t"]
 [ext_resource type="PackedScene" uid="uid://ble62hlaj1nf7" path="res://scenes/hit_box.tscn" id="9_rihcx"]
+[ext_resource type="Shader" uid="uid://n35s6xh71x5c" path="res://shaders/trail.gdshader" id="10_dg1qm"]
 [ext_resource type="PackedScene" uid="uid://llkhuh22kayk" path="res://scenes/trail_mesh.tscn" id="10_lbx0t"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ekty5"]
@@ -56,7 +57,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_5md78")
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_lbx0t"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_xc2hr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c2wns"]
+render_priority = 0
+shader = ExtResource("10_dg1qm")
+shader_parameter/alpha_override = false
+shader_parameter/new_color = Color(0.768627, 0.164706, 0.941176, 1)
 
 [node name="BaseWeapon" type="Node3D" node_paths=PackedStringArray("weaponMesh", "weaponPivot", "weaponPathFollow", "swingCoolDownTimer", "weaponPath3D", "trailMesh", "blockRotationNode", "hitBox")]
 script = ExtResource("1_kjhvj")
@@ -101,20 +108,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.288024, -0.131764, 1.39405)
 curve = ExtResource("2_kwyxs")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="BlockRotationParent/pivotPoint/Path3D"]
-transform = Transform3D(0.999849, 0.000208943, 0.000399118, 0, 0.885882, -0.463742, -0.000450477, 0.463755, 0.885856, 0.000286372, 0.204488, -0.534883)
+transform = Transform3D(0.999848, 0.000208943, 0.000399118, 0, 0.885882, -0.463742, -0.000450477, 0.463755, 0.885856, 0.000286372, 0.204488, -0.534883)
 
 [node name="SwordModel" type="MeshInstance3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D"]
-transform = Transform3D(0.508464, -3.67102e-11, -0.000210795, 0.000106248, 0.319283, 0.216992, 0.000202958, -0.167143, 0.414505, -0.000147435, -0.541645, 0.151548)
+transform = Transform3D(0.508464, -3.4088e-10, -0.000210796, 0.000106248, 0.319283, 0.216991, 0.000202958, -0.167143, 0.414505, -0.000147435, -0.541645, 0.151548)
 mesh = SubResource("ArrayMesh_xc2hr")
 skeleton = NodePath("../../../../..")
 
 [node name="TrailMesh" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D/SwordModel" instance=ExtResource("10_lbx0t")]
-transform = Transform3D(5.06533e-15, 8.59741e-08, -2.28971, 2.65105, -8.59741e-08, 0, -1.15881e-07, -1.96686, -1.00087e-07, 3.11653e-15, 2.47977, 8.55546e-09)
-mesh = SubResource("ImmediateMesh_lbx0t")
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, -1.84965e-22, 4.37114e-08, 1, -4.37114e-08, -1.23953e-07, 2.04478, 0.154092)
+mesh = SubResource("ImmediateMesh_xc2hr")
 skeleton = NodePath("../../../../../..")
-motionDelta = 0.024115
+fromWidth = 1.0
+scaleAcceleration = 3.0
 lifespan = 0.1
 startColor = Color(1, 1, 1, 0.909804)
+trailMaterial = SubResource("ShaderMaterial_c2wns")
 
 [node name="HitBox" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D" instance=ExtResource("9_rihcx")]
 transform = Transform3D(1, -1.22236e-09, -0.000450546, 0.000208959, 0.885946, 0.463788, 0.000399159, -0.463788, 0.885946, -0.000147435, 0.3195, -0.299257)

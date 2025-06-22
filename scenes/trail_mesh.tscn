@@ -8,6 +8,8 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h2fdu"]
 render_priority = 0
 shader = ExtResource("2_p6kye")
+shader_parameter/alpha_override = false
+shader_parameter/new_color = Color(0, 0, 0, 1)
 
 [node name="TrailMesh" type="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

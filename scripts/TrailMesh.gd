@@ -20,7 +20,7 @@ var lifePoints: Array[float] = []
 
 @export var fromWidth: float = 0.5
 @export var toWidth: float = 0.0
-@export_range(0.5, 1.5) var scaleAcceleration: float  = 1.0
+@export_range(0.5, 3.0) var scaleAcceleration: float  = 1.0
 
 @export var motionDelta: float = 0.1
 @export var lifespan: float = 1.0
@@ -33,20 +33,23 @@ var lifePoints: Array[float] = []
 @export var colorInterpolationMode: InterpolationMode = InterpolationMode.LINEAR
 @export var interpolationDirection: InterpolationDirection = InterpolationDirection.FORWARD
 
-@export var trailMaterial : Material
+@export var trailMaterial : ShaderMaterial
 
 var oldPos: Vector3
 
 func _ready() -> void:
-	oldPos = get_global_transform().origin
+	oldPos = global_position
 	mesh = ImmediateMesh.new()
 	
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	motionDelta = delta
-	if (oldPos - get_global_transform().origin).length() > motionDelta and trailEnabled:
+	mesh.clear_surfaces()
+	mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLE_STRIP, trailMaterial)
+	
+	if (oldPos - global_position).length() > motionDelta and trailEnabled:
 		appendPoint()
-		oldPos = get_global_transform().origin
+		oldPos = global_position
 	
 	var p: int = 0
 	var max_points: int = points.size()
@@ -55,27 +58,24 @@ func _process(delta: float) -> void:
 		if lifePoints[p] > lifespan:
 			removePoint(p)
 			p -= 1
-			if (p < 0): p = 0
-
+			if (p < 0): 
+				p = 0
+				
 		max_points = points.size()
 		p += 1
-
-	mesh.clear_surfaces()
 
 	if points.size() < 2:
 		return
 
-	mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLE_STRIP, trailMaterial)
-
 	for i in range(points.size()):
 		var t: float = float(i) / (points.size() - 1.0)
-
-		var currColor: Color = endColor
-
-		var progress: float = t
-
-		if interpolationDirection == InterpolationDirection.BACKWARD:
-			progress = 1 - t
+#
+		##var currColor: Color = endColor
+#
+		#var progress: float = t
+#
+		#if interpolationDirection == InterpolationDirection.BACKWARD:
+			#progress = 1 - t
 
 		#if colorInterpolationMode == InterpolationMode.LINEAR:
 			#currColor = startColor.lerp(endColor, 1 - progress)
@@ -98,7 +98,7 @@ func _process(delta: float) -> void:
 			mesh.surface_set_uv(Vector2(t1, 1))
 			mesh.surface_add_vertex(to_local(points[i] - currWidth))
 		else:
-			var t0: float = i / points.size()
+			var t0: float = i / float(points.size())
 			var t1: float = t
 
 			mesh.surface_set_uv(Vector2(t0, 0))
@@ -108,14 +108,14 @@ func _process(delta: float) -> void:
 	mesh.surface_end()
 
 func appendPoint() -> void:
-	var direction: Vector3 = get_global_transform().origin - oldPos
-	direction = direction.normalized()
-	#rotation.y = atan2(direction.x, direction.z)
-
-	points.append(get_global_transform().origin)
+	#var direction: Vector3 = global_position - oldPos
+	#direction = direction.normalized()
+	#
+	basis = basis.orthonormalized()
+	points.append(global_position)
 	widths.append([
-		get_global_transform().basis.x * fromWidth,
-		get_global_transform().basis.x * fromWidth - get_global_transform().basis.x * toWidth
+		global_basis.x * fromWidth,
+		global_basis.x * fromWidth - global_basis.x * toWidth
 	])
 	lifePoints.append(0.0)
 

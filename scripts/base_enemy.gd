@@ -116,10 +116,11 @@ func move_to_point(destination : Vector3, delta):
 	
 	navAgent.target_position = destination
 	var direction = navAgent.get_next_path_position() - global_position
-	var target: Basis = Basis.looking_at(direction)
 	direction = direction.normalized()
+	var target: Basis = Basis.looking_at(direction)
 	
-	basis = basis.slerp(target, delta)
+	
+	basis = basis.slerp(target.orthonormalized(), delta).orthonormalized()
 	velocity = direction * speed
 	
 func set_speed(new_speed : float):

@@ -5,6 +5,8 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gsjm6"]
 render_priority = 0
 shader = ExtResource("1_pwdqv")
+shader_parameter/alpha_override = false
+shader_parameter/new_color = Color(0, 0, 0, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_q5wo6"]
 material = SubResource("ShaderMaterial_gsjm6")
