@@ -16,7 +16,21 @@ var points: Array[Vector3]  = []
 var widths: Array  = []
 var lifePoints: Array[float] = []
 
-@export var trailEnabled: bool = true
+@export var trailEnabled: bool = true :
+	
+	get:
+		
+		return trailEnabled
+	
+	set(value):
+		
+		if(value):
+			
+			fromWidth = initialFromWidth
+			
+			if(shrinkTween != null):
+				
+				shrinkTween.kill()
 
 @export var fromWidth: float = 0.5
 @export var toWidth: float = 0.0
@@ -37,10 +51,14 @@ var lifePoints: Array[float] = []
 
 var oldPos: Vector3
 
+var initialFromWidth : float
+
+var shrinkTween : Tween
+
 func _ready() -> void:
 	oldPos = global_position
 	mesh = ImmediateMesh.new()
-	
+	initialFromWidth = fromWidth
 
 func _physics_process(delta: float) -> void:
 	motionDelta = delta
@@ -123,3 +141,16 @@ func removePoint(i: int) -> void:
 	points.remove_at(i)
 	widths.remove_at(i)
 	lifePoints.remove_at(i)
+
+func tweenFromWidthToZero():
+	
+	var tween = get_tree().create_tween()
+	
+	tween.parallel().tween_property(self, "fromWidth", 0.0, 0.1)
+	
+	tween.finished.connect(setTrailEnabled.bind(false))
+	
+	shrinkTween = tween
+
+func setTrailEnabled(new_value : bool):
+	trailEnabled = new_value

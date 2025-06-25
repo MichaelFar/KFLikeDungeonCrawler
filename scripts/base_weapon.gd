@@ -52,20 +52,26 @@ var weaponState : WeaponStates :
 			
 			weaponState = value
 			
+			
 			for i in hitBox.get_children():
 						i.disabled = true
-			trailMesh.trailEnabled = false
+			
 			match value :
 				
 				WeaponStates.ATTACKING:
 					trailMesh.trailEnabled = true
 					for i in hitBox.get_children():
 						i.disabled = false
+				WeaponStates.RESTING:
+					if(trailMesh.trailEnabled):
+						trailMesh.tweenFromWidthToZero()
 	
 
 func _ready() -> void:
+	
 	swingCoolDownTimer.wait_time = swingCooldown
 	trailMesh.trailEnabled = false
+	
 func swing_weapon():
 	
 	weaponState = WeaponStates.ATTACKING
@@ -93,7 +99,6 @@ func swing_weapon():
 	var maxRangeZ := zAngleSwingLimit
 	var minRangeY := yAngleSwingLimit * -1.0
 	var maxRangeY := yAngleSwingLimit
-	
 	
 	var randomAngleZ = randObj.randf_range(minRangeZ, maxRangeZ)
 	var randomAngleY = randObj.randf_range(minRangeY, maxRangeY)
@@ -162,7 +167,6 @@ func block_with_weapon():
 	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:x", -60, swingSpeed)
 	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:y", 90.0, swingSpeed)
 	tween.parallel().tween_property(weaponPathFollow, "progress_ratio", 0.0, swingSpeed)
-	
 	
 func _on_hit_box_body_entered(body: Node3D) -> void:
 	if(body is PhysicsProp):

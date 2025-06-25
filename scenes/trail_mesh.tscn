@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://2gw56fsngv6c" path="res://scripts/TrailMesh.gd" id="1_3b1jv"]
 [ext_resource type="Shader" uid="uid://n35s6xh71x5c" path="res://shaders/trail.gdshader" id="2_p6kye"]
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_3b1jv"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_p6kye"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h2fdu"]
 render_priority = 0
@@ -12,8 +12,7 @@ shader_parameter/alpha_override = false
 shader_parameter/new_color = Color(0, 0, 0, 1)
 
 [node name="TrailMesh" type="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("ImmediateMesh_3b1jv")
+mesh = SubResource("ImmediateMesh_p6kye")
 script = ExtResource("1_3b1jv")
 motionDelta = 0.0166667
 trailMaterial = SubResource("ShaderMaterial_h2fdu")

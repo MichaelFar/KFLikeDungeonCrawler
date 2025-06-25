@@ -57,7 +57,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_5md78")
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_xc2hr"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_dg1qm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c2wns"]
 render_priority = 0
@@ -108,7 +108,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.288024, -0.131764, 1.39405)
 curve = ExtResource("2_kwyxs")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="BlockRotationParent/pivotPoint/Path3D"]
-transform = Transform3D(0.999848, 0.000208943, 0.000399118, 0, 0.885882, -0.463742, -0.000450477, 0.463755, 0.885856, 0.000286372, 0.204488, -0.534883)
+transform = Transform3D(0.999848, 0.000208943, 0.000399118, 0, 0.885882, -0.463742, -0.000450477, 0.463756, 0.885856, 0.000286372, 0.204488, -0.534883)
 
 [node name="SwordModel" type="MeshInstance3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D"]
 transform = Transform3D(0.508464, -3.4088e-10, -0.000210796, 0.000106248, 0.319283, 0.216991, 0.000202958, -0.167143, 0.414505, -0.000147435, -0.541645, 0.151548)
@@ -117,7 +117,7 @@ skeleton = NodePath("../../../../..")
 
 [node name="TrailMesh" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D/SwordModel" instance=ExtResource("10_lbx0t")]
 transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, -1.84965e-22, 4.37114e-08, 1, -4.37114e-08, -1.23953e-07, 2.04478, 0.154092)
-mesh = SubResource("ImmediateMesh_xc2hr")
+mesh = SubResource("ImmediateMesh_dg1qm")
 skeleton = NodePath("../../../../../..")
 fromWidth = 1.0
 scaleAcceleration = 3.0
