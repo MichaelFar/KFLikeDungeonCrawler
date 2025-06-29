@@ -73,7 +73,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35947, 0)
 navigation_mesh = SubResource("NavigationMesh_uyrf3")
 
 [node name="ChessBoardManager" parent="." instance=ExtResource("5_vhnsk")]
-boardDimensions = Vector2i(8, 8)
-boardSpaceColorsArray = Array[Color]([Color(0, 0.0470588, 0, 1), Color(0.756863, 0.796078, 0.756863, 1)])
+boardSpaceColorsArray = Array[Color]([Color(0, 0.682353, 0, 1), Color(0.756863, 0.203922, 0.756863, 1)])
 
 [editable path="WanderRegion"]

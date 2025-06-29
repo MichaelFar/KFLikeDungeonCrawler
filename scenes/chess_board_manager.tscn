@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3vbw5s1xa5gl"]
+
+[ext_resource type="Script" uid="uid://dc1flw0li08mf" path="res://scripts/chess_board_manager.gd" id="1_6grb2"]
+[ext_resource type="PackedScene" uid="uid://dfgekj5l8qy2g" path="res://scenes/chess_board_space.tscn" id="2_dxleb"]
+
+[node name="ChessBoardManager" type="Node3D"]
+script = ExtResource("1_6grb2")
+boardSpaceScene = ExtResource("2_dxleb")
+boardSpaceColorsArray = Array[Color]([Color(0.745098, 0, 0, 1), Color(0.756087, 0.756087, 0.756087, 1)])
