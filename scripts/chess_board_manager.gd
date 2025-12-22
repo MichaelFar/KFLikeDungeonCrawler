@@ -21,8 +21,6 @@ func create_board_spaces():
 	
 	var color_array_index = 0
 	
-	
-	
 	for i in range(boardDimensions.x):
 		
 		print("new row")
@@ -39,12 +37,14 @@ func create_board_spaces():
 				
 			else:
 				
-				print(color_array_index % 2)
+				print(color_array_index % boardSpaceColorsArray.size())
 				
-				var next_space = create_space(Vector3(i * spaceSize.x,0,j * spaceSize.y), boardSpaceColorsArray[color_array_index % 2])
+				var next_space = create_space(Vector3(i * spaceSize.x,0,j * spaceSize.y), boardSpaceColorsArray[color_array_index % boardSpaceColorsArray.size()])
 				
 			color_array_index += 1
+			
 		color_array_index += 1
+		
 func create_space(instance_position : Vector3, new_color : Color) -> ChessBoardSpace:
 	
 	var space_obj : ChessBoardSpace = boardSpaceScene.instantiate()

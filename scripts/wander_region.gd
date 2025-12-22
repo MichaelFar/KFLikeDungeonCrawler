@@ -22,6 +22,7 @@ var meshCornerPoints : PackedVector3Array
 func _ready() -> void:
 	#print(meshBoundary.global_transform * remove_duplicate_points_on_polygon())
 	meshCornerPoints = meshBoundary.global_transform * remove_duplicate_points_on_polygon()
+
 func remove_duplicate_points_on_polygon() -> PackedVector3Array:
 	
 	var final_point_vector : PackedVector3Array

@@ -38,8 +38,8 @@ fov = 62.6
 [node name="WeaponHolder" type="Node3D" parent="Head" node_paths=PackedStringArray("weapon", "playerController")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.259403, 0.155733, -1.73245)
 script = ExtResource("2_rji43")
-weapon = NodePath("BaseWeapon")
+weapon = NodePath("BaseMeleeWeapon")
 playerController = NodePath("../..")
 
-[node name="BaseWeapon" parent="Head/WeaponHolder" instance=ExtResource("3_h1xqo")]
+[node name="BaseMeleeWeapon" parent="Head/WeaponHolder" instance=ExtResource("3_h1xqo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0733162, 0.120085, 0.750611)

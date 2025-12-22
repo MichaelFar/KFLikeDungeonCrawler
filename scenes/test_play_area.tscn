@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cvn2a5ou7chay"]
+[gd_scene load_steps=16 format=3 uid="uid://cvn2a5ou7chay"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://scenes/proto_controller.tscn" id="1_23u8n"]
 [ext_resource type="PackedScene" uid="uid://bvqivjlt6robm" path="res://scenes/test_box_prop.tscn" id="2_nqmnh"]
@@ -16,6 +16,12 @@ background_mode = 2
 sky = SubResource("Sky_23u8n")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vhnsk"]
+rough = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0pf24"]
+rough = true
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_23u8n"]
 
@@ -43,6 +49,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0533447, 0, -0.00209427)
 
 [node name="box_prop" parent="." instance=ExtResource("2_nqmnh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.334492, 7.37098, -4.36392)
+physics_material_override = SubResource("PhysicsMaterial_vhnsk")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.52866, 0.848833, 0, -0.848833, -0.52866, 0, 0, 0)
@@ -52,8 +59,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75595, 0, 1.30363)
 wanderRegion = NodePath("../WanderRegion")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_0pf24")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="WorldBoundary" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("WorldBoundaryShape3D_23u8n")
 
 [node name="WanderRegion" parent="." instance=ExtResource("4_xs7jo")]
@@ -65,7 +73,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.139453, 0)
 mesh = SubResource("PlaneMesh_vhnsk")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6157255, 0)
 mesh = SubResource("PlaneMesh_xs7jo")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
@@ -73,7 +81,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35947, 0)
 navigation_mesh = SubResource("NavigationMesh_uyrf3")
 
 [node name="ChessBoardManager" parent="." instance=ExtResource("5_vhnsk")]
-boardDimensions = Vector2i(8, 8)
-boardSpaceColorsArray = Array[Color]([Color(0, 0.0470588, 0, 1), Color(0.756863, 0.796078, 0.756863, 1)])
+boardDimensions = Vector2i(9, 9)
+boardSpaceColorsArray = Array[Color]([Color(0, 0.0470588, 0, 1), Color(0.30588236, 0.09803922, 0.7529412, 1), Color(0, 1, 0, 1)])
 
 [editable path="WanderRegion"]

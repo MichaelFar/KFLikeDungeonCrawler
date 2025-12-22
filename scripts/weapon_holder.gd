@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var weapon : BaseWeapon
+@export var weapon : BaseMeleeWeapon
 
 @export var playerController : CharacterBody3D
 
@@ -17,8 +17,6 @@ var mouseMovement : Vector2
 var bobDirection : int = -1
 
 var isBobbing : bool = false
-
-
 
 var globalTween : Tween
 
