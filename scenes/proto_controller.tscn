@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bs72ogkvdd7d6"]
+[gd_scene load_steps=6 format=3 uid="uid://bs72ogkvdd7d6"]
 
 [ext_resource type="Script" uid="uid://o1lh4an6ng7t" path="res://scripts/proto_controller.gd" id="1_ucva2"]
 [ext_resource type="Script" uid="uid://cd37o20x1nwql" path="res://scripts/weapon_holder.gd" id="2_rji43"]
-[ext_resource type="PackedScene" uid="uid://b1jveyo7lda5m" path="res://scenes/BaseWeapon.tscn" id="3_h1xqo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
 albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
@@ -38,8 +37,5 @@ fov = 62.6
 [node name="WeaponHolder" type="Node3D" parent="Head" node_paths=PackedStringArray("weapon", "playerController")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.259403, 0.155733, -1.73245)
 script = ExtResource("2_rji43")
-weapon = NodePath("BaseMeleeWeapon")
+weapon = NodePath("")
 playerController = NodePath("../..")
-
-[node name="BaseMeleeWeapon" parent="Head/WeaponHolder" instance=ExtResource("3_h1xqo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0733162, 0.120085, 0.750611)

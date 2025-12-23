@@ -2,12 +2,12 @@ extends Strategy #extends resource
 
 class_name MeleeSwingStrategy
 
-@export_range(0.0 ,100, 0.01) var yWeaponRotation : float
-@export_range(0.0 ,100, 0.01) var xWeaponRotation : float
-@export_range(0.0 ,1.0, 0.01) var yWeaponRotationPosition : float
-@export_range(0.0 ,1.0, 0.01) var xWeaponRotationPosition : float
+
 @export_range(0.0, 100.0) var zAngleSwingLimit : float
 @export_range(0.0, 100.0) var yAngleSwingLimit : float
+
+@export var swingCooldown : float
+@export var swingSpeed : float
 
 var blockRotationNode : Node3D
 var weaponPivot : Node3D
@@ -17,10 +17,9 @@ var weaponPath3D : Path3D
 var swingCoolDownTimer : Timer
 var attackCurve : Resource
 
-func populate_values():
-	pass
 
-func activate_effect():
+
+func execute_strategy():
 	
 	weaponPath3D.curve = attackCurve
 	
@@ -30,7 +29,7 @@ func activate_effect():
 		print("Timer exists aborting swing")
 		return
 	
-	weaponOwner.kill_global_tween()
+	#weaponOwner.kill_global_tween()
 	
 	swingCoolDownTimer.start()
 	var randObj = RandomNumberGenerator.new()

@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://bxlm83w6adba3"]
+
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://scenes/proto_controller.tscn" id="1_xyyn4"]
+[ext_resource type="PackedScene" uid="uid://4juhdoaix6ik" path="res://scenes/base_melee_test_weapon.tscn" id="2_6reh4"]
+[ext_resource type="Texture2D" uid="uid://b30eseor8ttk" path="res://icon.svg" id="3_6reh4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sldql"]
+albedo_texture = ExtResource("3_6reh4")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xyyn4"]
+material = SubResource("StandardMaterial3D_sldql")
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_6reh4"]
+
+[node name="RefactorTestScene" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 1.0
+
+[node name="ProtoController" parent="." instance=ExtResource("1_xyyn4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12540054, 0, 0.8177626)
+
+[node name="WeaponHolder" parent="ProtoController/Head" index="1" node_paths=PackedStringArray("weapon")]
+weapon = NodePath("BaseMeleeTestWeapon")
+
+[node name="BaseMeleeTestWeapon" parent="ProtoController/Head/WeaponHolder" index="0" instance=ExtResource("2_6reh4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11617386, -0.15573299, 0.7839502)
+swayMin = Vector2(-40, -40)
+swayMax = Vector2(40, 40)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(9.394202, 0, 0, 0, 0.9999995, 0, 0, 0, 12.690946, 0, 0, 0)
+mesh = SubResource("PlaneMesh_xyyn4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 0, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_6reh4")
+
+[editable path="ProtoController"]

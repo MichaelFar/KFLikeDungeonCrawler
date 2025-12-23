@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var weapon : BaseMeleeWeapon
+@export var weapon : BaseWeapon
 
 @export var playerController : CharacterBody3D
 
@@ -36,15 +36,15 @@ func _input(event: InputEvent) -> void:
 	
 		mouseMovement = event.relative
 	
-	if(event.is_action_released("swing")):
+	if(event.is_action_released("primary")):
 		
-		weapon.swing_weapon()
+		weapon.activate_primary_strategy()
 	
-	if(event.is_action_pressed("block")):
+	if(event.is_action_pressed("secondary")):
 		
-		weapon.block_with_weapon()
+		weapon.activate_secondary_strategy()
 		
-	elif(event.is_action_released("block")):
+	elif(event.is_action_released("secondary")):
 		
 		weapon.return_weapon()
 	
