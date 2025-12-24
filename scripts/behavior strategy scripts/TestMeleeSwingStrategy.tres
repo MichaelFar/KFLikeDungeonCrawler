@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MeleeSwingStrategy" load_steps=2 format=3 uid="uid://dajc7c2q3kwrp"]
+
+[ext_resource type="Script" uid="uid://ccy8n53fs6p6g" path="res://scripts/behavior strategy scripts/MeleeSwingStrategy.gd" id="1_wc6wp"]
+
+[resource]
+script = ExtResource("1_wc6wp")
+zAngleSwingLimit = 29.411
+yAngleSwingLimit = 28.306
+swingCooldown = 0.3
+swingSpeed = 0.38
+metadata/_custom_type_script = "uid://ccy8n53fs6p6g"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://b1jveyo7lda5m"]
+[gd_scene load_steps=18 format=4 uid="uid://b1jveyo7lda5m"]
 
 [ext_resource type="Script" uid="uid://djmfsqrnpgkby" path="res://scripts/base_melee_weapon.gd" id="1_kjhvj"]
 [ext_resource type="Texture2D" uid="uid://c3nxqxhw43c4x" path="res://textures/BaseSword/BaseSword_SwordMaterial_BaseColor.png" id="2_ekty5"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://ble62hlaj1nf7" path="res://scenes/hit_box.tscn" id="9_rihcx"]
 [ext_resource type="Shader" uid="uid://n35s6xh71x5c" path="res://shaders/trail.gdshader" id="10_dg1qm"]
 [ext_resource type="PackedScene" uid="uid://llkhuh22kayk" path="res://scenes/trail_mesh.tscn" id="10_lbx0t"]
-[ext_resource type="Script" uid="uid://oxdelrwgpqp" path="res://scripts/refcounted scripts/melee_object_data.gd" id="12_xc2hr"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ekty5"]
 
@@ -109,7 +108,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.288024, -0.131764, 1.39405)
 curve = ExtResource("2_kwyxs")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="BlockRotationParent/pivotPoint/Path3D"]
-transform = Transform3D(0.9998469, 0.00020894295, 0.0003991182, 0, 0.88588214, -0.4637421, -0.00045047628, 0.46375573, 0.8858559, 0.000286372, 0.204488, -0.534883)
+transform = Transform3D(0.9998454, 0.00020894295, 0.0003991182, 0, 0.88588214, -0.4637421, -0.0004504756, 0.46375573, 0.8858559, 0.000286372, 0.204488, -0.534883)
 
 [node name="SwordModel" type="MeshInstance3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D"]
 transform = Transform3D(0.508464, -3.4088e-10, -0.000210796, 0.000106248, 0.319283, 0.216991, 0.000202958, -0.167143, 0.414505, -0.000147435, -0.541645, 0.151548)
@@ -131,11 +130,5 @@ transform = Transform3D(1, -1.22236e-09, -0.000450546, 0.000208959, 0.885946, 0.
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
-
-[node name="MeleeWeaponObjectData" type="Node3D" parent="." node_paths=PackedStringArray("blockRotationNode", "weaponPivot", "weaponPathFollow")]
-script = ExtResource("12_xc2hr")
-blockRotationNode = NodePath("../BlockRotationParent")
-weaponPivot = NodePath("../BlockRotationParent/pivotPoint")
-weaponPathFollow = NodePath("../BlockRotationParent/pivotPoint/Path3D/PathFollow3D")
 
 [connection signal="body_entered" from="BlockRotationParent/pivotPoint/Path3D/PathFollow3D/HitBox" to="." method="_on_hit_box_body_entered"]

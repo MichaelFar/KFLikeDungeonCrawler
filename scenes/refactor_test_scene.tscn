@@ -26,7 +26,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12540054, 0, 0.8177626)
 weapon = NodePath("BaseMeleeTestWeapon")
 
 [node name="BaseMeleeTestWeapon" parent="ProtoController/Head/WeaponHolder" index="0" instance=ExtResource("2_6reh4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11617386, -0.15573299, 0.7839502)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19211006, -0.15573299, 0.7839502)
 swayMin = Vector2(-40, -40)
 swayMax = Vector2(40, 40)
 

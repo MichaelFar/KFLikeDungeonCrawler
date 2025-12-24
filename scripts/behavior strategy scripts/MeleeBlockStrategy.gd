@@ -1,12 +1,7 @@
-extends Strategy #extends resource
+extends Strategy
 
-class_name MeleeSwingStrategy
+class_name MeleeBlockStrategy
 
-
-@export_range(0.0, 100.0) var zAngleSwingLimit : float
-@export_range(0.0, 100.0) var yAngleSwingLimit : float
-
-@export var swingCooldown : float
 @export var swingSpeed : float
 
 var blockRotationNode : Node3D
@@ -20,7 +15,10 @@ var hitbox : Area3D
 var globalTween : Tween
 
 var isResting : bool = false
+var isBlocking : bool = false
+
 var releaseInputString : String
+
 func populate_values(new_weapon_data : InstanceWeaponData):
 	if(new_weapon_data is InstanceMeleeWeaponData):
 		blockRotationNode = new_weapon_data.blockRotationNode
@@ -29,47 +27,36 @@ func populate_values(new_weapon_data : InstanceWeaponData):
 		weaponOwner = new_weapon_data.weaponOwner
 		weaponPath3D = new_weapon_data.weaponPath3D
 		swingCoolDownTimer = new_weapon_data.swingCoolDownTimer
-		attackCurve = new_weapon_data.attackCurve
+		#attackCurve = new_weapon_data.attackCurve
 		hitbox = new_weapon_data.hitbox
-		swingCoolDownTimer.wait_time = swingCooldown
-		
+
+func strategy_process(delta : float):
+	if(Input.is_action_just_released(releaseInputString)):
+		return_weapon()
 
 func execute_strategy(release_string : String):
-	
-	#weaponPath3D.curve = attackCurve
-	
-	#canBlock = false
-	
-	if(!swingCoolDownTimer.is_stopped()):
+	releaseInputString = release_string
+	if(!swingCoolDownTimer.is_stopped() || !canBeInitiated):
+		
 		print("Timer exists aborting swing")
-		return
-	
-	isResting = false
+		return 
+		
 	kill_global_tween()
 	
-	swingCoolDownTimer.start()
-	var randObj = RandomNumberGenerator.new()
+	isResting = false
 	
-	var minRangeZ := zAngleSwingLimit * -1.0
-	var maxRangeZ := zAngleSwingLimit
-	var minRangeY := yAngleSwingLimit * -1.0
-	var maxRangeY := yAngleSwingLimit
-	
-	var randomAngleZ = randObj.randf_range(minRangeZ, maxRangeZ)
-	var randomAngleY = randObj.randf_range(minRangeY, maxRangeY)
-	#print(str(randomAngle))
-	weaponPathFollow.progress_ratio = 0.0
-	blockRotationNode.rotation_degrees.y = 0.0
-	blockRotationNode.rotation_degrees.x = 0.0
-	weaponPivot.rotation_degrees.y = randomAngleY
-	weaponPivot.rotation_degrees.z = randomAngleZ
 	var tween = weaponOwner.get_tree().create_tween()
 	globalTween = tween
+	
 	#tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_CIRC)
-	tween.tween_property(weaponPathFollow, "progress_ratio", 1.0, swingSpeed)
-	tween.finished.connect(return_weapon)
-
+	tween.parallel().tween_property(weaponPivot, "rotation_degrees:y",0, swingSpeed)
+	tween.parallel().tween_property(weaponPivot, "rotation_degrees:z",0, swingSpeed)
+	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:x", -60, swingSpeed)
+	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:y", 90.0, swingSpeed)
+	tween.parallel().tween_property(weaponPathFollow, "progress_ratio", 0.0, swingSpeed)
+	
+	
 func return_weapon():
 	#weaponState = WeaponStates.RESTING
 	isResting = true
@@ -84,7 +71,7 @@ func return_weapon():
 	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:y", 0.0, 1.4)
 	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:x", 0, 1.4)
 	tween.parallel().tween_property(weaponPathFollow, "progress_ratio", 0.0, 1.4)
-
+	
 func kill_global_tween():
 	
 	if(globalTween != null):
@@ -92,8 +79,10 @@ func kill_global_tween():
 		if(globalTween.is_running()):
 			
 			globalTween.kill()
-			
-			if(!isResting):
+	
+			if(isResting):
 				
-				weaponPathFollow.progress_ratio = 0.0
-			
+				if(!isBlocking):
+					
+					weaponPathFollow.progress_ratio = 0.0
+	

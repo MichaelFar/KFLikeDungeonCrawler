@@ -1,9 +1,10 @@
-[gd_scene load_steps=20 format=4 uid="uid://4juhdoaix6ik"]
+[gd_scene load_steps=21 format=4 uid="uid://4juhdoaix6ik"]
 
 [ext_resource type="Script" uid="uid://cegtxvffpe87e" path="res://scripts/base_weapon.gd" id="1_2hbpg"]
 [ext_resource type="Curve3D" uid="uid://dqrppbi1njpud" path="res://attack_curve_resources/BaseWeaponCurve.tres" id="1_f5ju4"]
 [ext_resource type="Texture2D" uid="uid://c3nxqxhw43c4x" path="res://textures/BaseSword/BaseSword_SwordMaterial_BaseColor.png" id="2_2hbpg"]
-[ext_resource type="Script" uid="uid://ccy8n53fs6p6g" path="res://scripts/behavior strategy scripts/MeleeSwingStrategy.gd" id="2_rmc1a"]
+[ext_resource type="Resource" uid="uid://dajc7c2q3kwrp" path="res://scripts/behavior strategy scripts/TestMeleeSwingStrategy.tres" id="2_rmc1a"]
+[ext_resource type="Script" uid="uid://csyoyeavkfqdn" path="res://scripts/behavior strategy scripts/MeleeBlockStrategy.gd" id="3_nm43k"]
 [ext_resource type="Texture2D" uid="uid://bs34q37d2dame" path="res://textures/BaseSword/BaseSword_SwordMaterial_Height.png" id="3_rmc1a"]
 [ext_resource type="Texture2D" uid="uid://cgglbicx8o35s" path="res://textures/BaseSword/BaseSword_SwordMaterial_Metallic.png" id="4_nm43k"]
 [ext_resource type="Texture2D" uid="uid://cqkiv8e330f8m" path="res://textures/BaseSword/BaseSword_SwordMaterial_Normal.png" id="5_dyecb"]
@@ -11,15 +12,12 @@
 [ext_resource type="PackedScene" uid="uid://llkhuh22kayk" path="res://scenes/trail_mesh.tscn" id="7_k3soq"]
 [ext_resource type="Shader" uid="uid://n35s6xh71x5c" path="res://shaders/trail.gdshader" id="8_dr3f5"]
 [ext_resource type="PackedScene" uid="uid://ble62hlaj1nf7" path="res://scenes/hit_box.tscn" id="9_t878w"]
-[ext_resource type="Script" uid="uid://oxdelrwgpqp" path="res://scripts/refcounted scripts/melee_object_data.gd" id="10_s7wxc"]
+[ext_resource type="Script" uid="uid://oxdelrwgpqp" path="res://scripts/NodeWeaponDataScripts/melee_object_data.gd" id="10_s7wxc"]
 
-[sub_resource type="Resource" id="Resource_nm43k"]
-script = ExtResource("2_rmc1a")
-zAngleSwingLimit = 29.411
-yAngleSwingLimit = 28.306
-swingCooldown = 0.3
+[sub_resource type="Resource" id="Resource_dyecb"]
+script = ExtResource("3_nm43k")
 swingSpeed = 0.38
-metadata/_custom_type_script = "uid://ccy8n53fs6p6g"
+metadata/_custom_type_script = "uid://csyoyeavkfqdn"
 
 [sub_resource type="SphereMesh" id="SphereMesh_exxxk"]
 
@@ -66,7 +64,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_5md78")
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_rmc1a"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_nm43k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e04cu"]
 render_priority = 0
@@ -76,7 +74,8 @@ shader_parameter/new_color = Color(0.768627, 0.164706, 0.941176, 1)
 
 [node name="BaseMeleeTestWeapon" type="Node3D" node_paths=PackedStringArray("weaponObjectData")]
 script = ExtResource("1_2hbpg")
-primaryStrategy = SubResource("Resource_nm43k")
+primaryStrategy = ExtResource("2_rmc1a")
+secondaryStrategy = SubResource("Resource_dyecb")
 weaponObjectData = NodePath("MeleeWeaponObjectData")
 yWeaponSway = 0.8
 xWeaponSway = 0.8
@@ -103,7 +102,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.288024, -0.131764, 1.39405)
 curve = ExtResource("1_f5ju4")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="BlockRotationParent/pivotPoint/Path3D"]
-transform = Transform3D(0.99984586, 0.00020894295, 0.0003991182, 0, 0.88588214, -0.4637421, -0.00045047584, 0.46375573, 0.8858559, 0.000286372, 0.204488, -0.534883)
+transform = Transform3D(0.9998445, 0.00020894295, 0.0003991182, 0, 0.88588214, -0.4637421, -0.0004504752, 0.46375573, 0.8858559, 0.000286372, 0.204488, -0.534883)
 
 [node name="SwordModel" type="MeshInstance3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D"]
 transform = Transform3D(0.508464, -3.4088e-10, -0.000210796, 0.000106248, 0.319283, 0.216991, 0.000202958, -0.167143, 0.414505, -0.000147435, -0.541645, 0.151548)
@@ -112,7 +111,7 @@ skeleton = NodePath("../../../../..")
 
 [node name="TrailMesh" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D/SwordModel" instance=ExtResource("7_k3soq")]
 transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, -1.84965e-22, 4.37114e-08, 1, -4.37114e-08, -1.23953e-07, 2.04478, 0.154092)
-mesh = SubResource("ImmediateMesh_rmc1a")
+mesh = SubResource("ImmediateMesh_nm43k")
 skeleton = NodePath("../../../../../..")
 fromWidth = 1.0
 scaleAcceleration = 3.0
@@ -126,7 +125,7 @@ transform = Transform3D(1, -1.22236e-09, -0.000450546, 0.000208959, 0.885946, 0.
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
-[node name="MeleeWeaponObjectData" type="Node3D" parent="." node_paths=PackedStringArray("blockRotationNode", "weaponPivot", "weaponPathFollow", "weaponOwner", "weaponPath3D", "swingCoolDownTimer")]
+[node name="MeleeWeaponObjectData" type="Node3D" parent="." node_paths=PackedStringArray("blockRotationNode", "weaponPivot", "weaponPathFollow", "weaponOwner", "weaponPath3D", "swingCoolDownTimer", "hitbox")]
 script = ExtResource("10_s7wxc")
 blockRotationNode = NodePath("../BlockRotationParent")
 weaponPivot = NodePath("../BlockRotationParent/pivotPoint")
@@ -135,3 +134,4 @@ weaponOwner = NodePath("..")
 weaponPath3D = NodePath("../BlockRotationParent/pivotPoint/Path3D")
 swingCoolDownTimer = NodePath("../Timer")
 attackCurve = ExtResource("1_f5ju4")
+hitbox = NodePath("../BlockRotationParent/pivotPoint/Path3D/PathFollow3D/HitBox")

@@ -72,7 +72,6 @@ func _ready() -> void:
 	swingCoolDownTimer.wait_time = swingCooldown
 	trailMesh.trailEnabled = false
 	
-	
 func swing_weapon():
 	
 	weaponState = WeaponStates.ATTACKING
