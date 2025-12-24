@@ -12,14 +12,22 @@ var weaponPath3D : Path3D
 var swingCoolDownTimer : Timer
 var attackCurve : Resource
 var hitbox : Area3D
-var globalTween : Tween
+var globalTween : Tween :
+	set(value):
+		globalTween = value
+		tween_changed.emit(value)
+	get():
+		return globalTween
 
 var isResting : bool = false
 var isBlocking : bool = false
 
-var releaseInputString : String
+var releaseInputString : String = " "
+
+signal tween_changed
 
 func populate_values(new_weapon_data : InstanceWeaponData):
+	
 	if(new_weapon_data is InstanceMeleeWeaponData):
 		blockRotationNode = new_weapon_data.blockRotationNode
 		weaponPivot = new_weapon_data.weaponPivot
@@ -29,8 +37,10 @@ func populate_values(new_weapon_data : InstanceWeaponData):
 		swingCoolDownTimer = new_weapon_data.swingCoolDownTimer
 		#attackCurve = new_weapon_data.attackCurve
 		hitbox = new_weapon_data.hitbox
+		canBeInterrupted = true
 
 func strategy_process(delta : float):
+	
 	if(Input.is_action_just_released(releaseInputString)):
 		return_weapon()
 
@@ -41,7 +51,7 @@ func execute_strategy(release_string : String):
 		print("Timer exists aborting swing")
 		return 
 		
-	kill_global_tween()
+	#kill_global_tween()
 	
 	isResting = false
 	
@@ -60,7 +70,7 @@ func execute_strategy(release_string : String):
 func return_weapon():
 	#weaponState = WeaponStates.RESTING
 	isResting = true
-	kill_global_tween()
+	#kill_global_tween()
 	
 	var tween = weaponOwner.get_tree().create_tween()
 	globalTween = tween
@@ -74,15 +84,9 @@ func return_weapon():
 	
 func kill_global_tween():
 	
-	if(globalTween != null):
-		
-		if(globalTween.is_running()):
-			
-			globalTween.kill()
-	
-			if(isResting):
-				
-				if(!isBlocking):
-					
-					weaponPathFollow.progress_ratio = 0.0
-	
+	pass
+	#if(isResting):
+		#
+		#if(!isBlocking):
+			#
+			#weaponPathFollow.progress_ratio = 0.0

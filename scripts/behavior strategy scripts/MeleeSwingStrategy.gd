@@ -17,10 +17,18 @@ var weaponPath3D : Path3D
 var swingCoolDownTimer : Timer
 var attackCurve : Resource
 var hitbox : Area3D
-var globalTween : Tween
+var globalTween : Tween:
+	set(value):
+		globalTween = value
+		tween_changed.emit(value)
+	get():
+		return globalTween
 
 var isResting : bool = false
 var releaseInputString : String
+
+signal tween_changed
+
 func populate_values(new_weapon_data : InstanceWeaponData):
 	if(new_weapon_data is InstanceMeleeWeaponData):
 		blockRotationNode = new_weapon_data.blockRotationNode
@@ -34,18 +42,17 @@ func populate_values(new_weapon_data : InstanceWeaponData):
 		swingCoolDownTimer.wait_time = swingCooldown
 		
 
+func strategy_process(delta : float):
+	
+	canBeInterrupted = swingCoolDownTimer.is_stopped()
+
 func execute_strategy(release_string : String):
-	
-	#weaponPath3D.curve = attackCurve
-	
-	#canBlock = false
 	
 	if(!swingCoolDownTimer.is_stopped()):
 		print("Timer exists aborting swing")
 		return
 	
 	isResting = false
-	kill_global_tween()
 	
 	swingCoolDownTimer.start()
 	var randObj = RandomNumberGenerator.new()
@@ -57,15 +64,16 @@ func execute_strategy(release_string : String):
 	
 	var randomAngleZ = randObj.randf_range(minRangeZ, maxRangeZ)
 	var randomAngleY = randObj.randf_range(minRangeY, maxRangeY)
-	#print(str(randomAngle))
+	
 	weaponPathFollow.progress_ratio = 0.0
 	blockRotationNode.rotation_degrees.y = 0.0
 	blockRotationNode.rotation_degrees.x = 0.0
 	weaponPivot.rotation_degrees.y = randomAngleY
 	weaponPivot.rotation_degrees.z = randomAngleZ
+	
 	var tween = weaponOwner.get_tree().create_tween()
 	globalTween = tween
-	#tween.set_ease(Tween.EASE_OUT)
+	
 	tween.set_trans(Tween.TRANS_CIRC)
 	tween.tween_property(weaponPathFollow, "progress_ratio", 1.0, swingSpeed)
 	tween.finished.connect(return_weapon)
@@ -73,7 +81,6 @@ func execute_strategy(release_string : String):
 func return_weapon():
 	#weaponState = WeaponStates.RESTING
 	isResting = true
-	kill_global_tween()
 	
 	var tween = weaponOwner.get_tree().create_tween()
 	globalTween = tween
@@ -84,16 +91,3 @@ func return_weapon():
 	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:y", 0.0, 1.4)
 	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:x", 0, 1.4)
 	tween.parallel().tween_property(weaponPathFollow, "progress_ratio", 0.0, 1.4)
-
-func kill_global_tween():
-	
-	if(globalTween != null):
-		
-		if(globalTween.is_running()):
-			
-			globalTween.kill()
-			
-			if(!isResting):
-				
-				weaponPathFollow.progress_ratio = 0.0
-			

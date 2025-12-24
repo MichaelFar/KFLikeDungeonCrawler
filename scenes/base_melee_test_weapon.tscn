@@ -102,7 +102,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.288024, -0.131764, 1.39405)
 curve = ExtResource("1_f5ju4")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="BlockRotationParent/pivotPoint/Path3D"]
-transform = Transform3D(0.9998445, 0.00020894295, 0.0003991182, 0, 0.88588214, -0.4637421, -0.0004504752, 0.46375573, 0.8858559, 0.000286372, 0.204488, -0.534883)
+transform = Transform3D(0.9998444, 0.00020894295, 0.0003991182, 0, 0.88588214, -0.4637421, -0.00045047517, 0.46375573, 0.8858559, 0.000286372, 0.204488, -0.534883)
 
 [node name="SwordModel" type="MeshInstance3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D"]
 transform = Transform3D(0.508464, -3.4088e-10, -0.000210796, 0.000106248, 0.319283, 0.216991, 0.000202958, -0.167143, 0.414505, -0.000147435, -0.541645, 0.151548)
@@ -110,7 +110,7 @@ mesh = SubResource("ArrayMesh_dxixp")
 skeleton = NodePath("../../../../..")
 
 [node name="TrailMesh" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D/SwordModel" instance=ExtResource("7_k3soq")]
-transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, -1.84965e-22, 4.37114e-08, 1, -4.37114e-08, -1.23953e-07, 2.04478, 0.154092)
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, -3.5730967e-21, 4.37114e-08, 1, -4.37114e-08, -1.23953e-07, 2.04478, 0.154092)
 mesh = SubResource("ImmediateMesh_nm43k")
 skeleton = NodePath("../../../../../..")
 fromWidth = 1.0
