@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://ba1lub2ghq74d"]
+
+[ext_resource type="PackedScene" uid="uid://bhyhhwvks08m" path="res://scenes/blockout scenes/base_cube.tscn" id="1_kbm3q"]
+
+[node name="3CubeBlock" type="Node3D"]
+
+[node name="BaseCube15" parent="." instance=ExtResource("1_kbm3q")]
+
+[node name="BaseCube16" parent="." instance=ExtResource("1_kbm3q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="BaseCube17" parent="." instance=ExtResource("1_kbm3q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)

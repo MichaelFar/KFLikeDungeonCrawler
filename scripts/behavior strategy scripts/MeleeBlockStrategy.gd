@@ -2,7 +2,7 @@ extends Strategy
 
 class_name MeleeBlockStrategy
 
-@export var swingSpeed : float
+@export var blockSpeed : float
 
 var blockRotationNode : Node3D
 var weaponPivot : Node3D
@@ -60,11 +60,11 @@ func execute_strategy(release_string : String):
 	
 	#tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_CIRC)
-	tween.parallel().tween_property(weaponPivot, "rotation_degrees:y",0, swingSpeed)
-	tween.parallel().tween_property(weaponPivot, "rotation_degrees:z",0, swingSpeed)
-	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:x", -60, swingSpeed)
-	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:y", 90.0, swingSpeed)
-	tween.parallel().tween_property(weaponPathFollow, "progress_ratio", 0.0, swingSpeed)
+	tween.parallel().tween_property(weaponPivot, "rotation_degrees:y",0, blockSpeed)
+	tween.parallel().tween_property(weaponPivot, "rotation_degrees:z",0, blockSpeed)
+	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:x", -60, blockSpeed)
+	tween.parallel().tween_property(blockRotationNode, "rotation_degrees:y", 90.0, blockSpeed)
+	tween.parallel().tween_property(weaponPathFollow, "progress_ratio", 0.0, blockSpeed)
 	
 	
 func return_weapon():

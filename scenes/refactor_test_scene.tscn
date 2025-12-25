@@ -29,6 +29,7 @@ weapon = NodePath("BaseMeleeTestWeapon")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19211006, -0.15573299, 0.7839502)
 swayMin = Vector2(-40, -40)
 swayMax = Vector2(40, 40)
+idealLocalStartingPosition = Vector3(0.19211006, -0.15573299, 0.7839502)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(9.394202, 0, 0, 0, 0.9999995, 0, 0, 0, 12.690946, 0, 0, 0)

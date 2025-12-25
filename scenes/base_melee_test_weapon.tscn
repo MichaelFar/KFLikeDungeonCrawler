@@ -16,7 +16,7 @@
 
 [sub_resource type="Resource" id="Resource_dyecb"]
 script = ExtResource("3_nm43k")
-swingSpeed = 0.38
+blockSpeed = 0.3
 metadata/_custom_type_script = "uid://csyoyeavkfqdn"
 
 [sub_resource type="SphereMesh" id="SphereMesh_exxxk"]
@@ -85,6 +85,7 @@ yWeaponRotation = 60.51
 xWeaponRotation = 60.14
 yWeaponRotationPosition = 0.05
 xWeaponRotationPosition = 0.05
+idealLocalStartingPosition = Vector3(0.19211006, -0.15573299, 0.7839502)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.451709, 0, 0, 0, 0.681579, 0, 0, 0, 0.333393, 0, 0, 0.393292)
@@ -102,7 +103,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.288024, -0.131764, 1.39405)
 curve = ExtResource("1_f5ju4")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="BlockRotationParent/pivotPoint/Path3D"]
-transform = Transform3D(0.9998444, 0.00020894295, 0.0003991182, 0, 0.88588214, -0.4637421, -0.00045047517, 0.46375573, 0.8858559, 0.000286372, 0.204488, -0.534883)
+transform = Transform3D(0.999843, 0.00020894235, 0.0003991174, 0, 0.88587964, -0.46374115, -0.00045047453, 0.46375442, 0.8858541, 0.000286372, 0.204488, -0.534883)
 
 [node name="SwordModel" type="MeshInstance3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D"]
 transform = Transform3D(0.508464, -3.4088e-10, -0.000210796, 0.000106248, 0.319283, 0.216991, 0.000202958, -0.167143, 0.414505, -0.000147435, -0.541645, 0.151548)
@@ -135,3 +136,5 @@ weaponPath3D = NodePath("../BlockRotationParent/pivotPoint/Path3D")
 swingCoolDownTimer = NodePath("../Timer")
 attackCurve = ExtResource("1_f5ju4")
 hitbox = NodePath("../BlockRotationParent/pivotPoint/Path3D/PathFollow3D/HitBox")
+
+[editable path="BlockRotationParent/pivotPoint/Path3D/PathFollow3D/HitBox"]

@@ -28,6 +28,8 @@ extends CharacterBody3D
 ## How fast do we freefly?
 @export var freefly_speed : float = 25.0
 
+@export var crouch_speed : float = 3.5
+
 @export_group("Input Actions")
 ## Name of Input Action to move Left.
 @export var input_left : String = "Left"
@@ -50,22 +52,30 @@ var move_speed : float = 0.0
 var freeflying : bool = false
 
 ## IMPORTANT REFERENCES
-@onready var head: Node3D = $Head
-@onready var collider: CollisionShape3D = $Collider
+@export var head: Node3D 
+@export var collider: CollisionShape3D
 @export var camera : Camera3D
 
+var initialHeadPosition : Vector3
+@export var initialCrouchCameraDestination : Marker3D
 
 signal Moving
 signal Stopped
 
 var isMoving : bool = false
 
+var isCrouching : bool = false
+
+var original_speed : float
+
 func _ready() -> void:
 	check_input_mappings()
+	initialHeadPosition = head.position
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
 	Global.camera = camera
 	Global.player = self
+	original_speed = base_speed
 	
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
@@ -136,10 +146,29 @@ func _physics_process(delta: float) -> void:
 	# Use velocity to actually move
 	move_and_slide()
 
-
+func _input(event: InputEvent) -> void:
+	
+	if (event.is_action_released("Crouch")):
+		crouch()
+	
+	if(event.is_action_pressed("Creep")):
+		base_speed = original_speed / 3.0
+	if(event.is_action_released("Creep")):
+		base_speed = original_speed if !isCrouching else crouch_speed
 ## Rotate us to look around.
 ## Base of controller rotates around y (left/right). Head rotates around x (up/down).
 ## Modifies look_rotation based on rot_input, then resets basis and rotates by look_rotation.
+func crouch():
+	
+	
+	var destination = initialCrouchCameraDestination.position.y if !isCrouching else initialHeadPosition.y
+	
+	
+	isCrouching = !isCrouching
+	base_speed = crouch_speed if isCrouching else original_speed
+	var tween = get_tree().create_tween()
+	tween.tween_property(head, "position:y",  destination, 0.2)
+	
 func rotate_look(rot_input : Vector2):
 	look_rotation.x -= rot_input.y * look_speed
 	look_rotation.x = clamp(look_rotation.x, deg_to_rad(-85), deg_to_rad(85))
