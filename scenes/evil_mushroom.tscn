@@ -1,8 +1,29 @@
-[gd_scene load_steps=14 format=4 uid="uid://wkc70xcqwhns"]
+[gd_scene load_steps=19 format=4 uid="uid://wkc70xcqwhns"]
 
 [ext_resource type="Script" uid="uid://b14jdqksl2ign" path="res://scripts/base_enemy.gd" id="1_46pwp"]
 [ext_resource type="Texture2D" uid="uid://bqs6osa0x74is" path="res://textures/EvilMushroom/MushroomEnemyFBX_EvilMushroomMaterial_BaseColor.png" id="1_fj4c4"]
+[ext_resource type="Script" uid="uid://rkw12dulditi" path="res://scripts/behavior strategy scripts/AI_strategies/RoutineAIStrategy.gd" id="2_0yesf"]
+[ext_resource type="Script" uid="uid://b830456hqhw71" path="res://scripts/behavior strategy scripts/AI_strategies/PlayerDetectedStrategy.gd" id="3_enkht"]
 [ext_resource type="PackedScene" uid="uid://ble62hlaj1nf7" path="res://scenes/hit_box.tscn" id="3_fj4c4"]
+[ext_resource type="Script" uid="uid://drqya58f0h24u" path="res://scripts/NodeAIDataScripts/patrolling_ai_data.gd" id="4_nmvgs"]
+
+[sub_resource type="Resource" id="Resource_0yesf"]
+script = ExtResource("2_0yesf")
+animationDict = {
+"attacking": "mushroom_attack",
+"idling": "mushroom_idle",
+"moving": "mushroom_move"
+}
+metadata/_custom_type_script = "uid://rkw12dulditi"
+
+[sub_resource type="Resource" id="Resource_enkht"]
+script = ExtResource("3_enkht")
+animationDict = {
+"attacking": "mushroom_attack",
+"idling": "mushroom_idle",
+"moving": "mushroom_move"
+}
+metadata/_custom_type_script = "uid://b830456hqhw71"
 
 [sub_resource type="Animation" id="Animation_nmvgs"]
 length = 0.001
@@ -85,11 +106,11 @@ tracks/1/keys = PackedFloat32Array(0, 1, 0.00217608, -0.983589, 1.32154e-07, 0.3
 tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".")
+tracks/2/path = NodePath("AIObjectData")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.733333),
+"times": PackedFloat32Array(0.0333333, 0.33333325, 0.7666663),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [0.0],
@@ -153,18 +174,11 @@ radius = 1.31641
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_46pwp"]
 radius = 5.65625
 
-[node name="EvilMushroom" type="CharacterBody3D" node_paths=PackedStringArray("animationPlayer", "navAgent", "IdleTimer", "WanderTimer", "meshParent")]
+[node name="EvilMushroom" type="CharacterBody3D" node_paths=PackedStringArray("patrollingAIData")]
 script = ExtResource("1_46pwp")
-animationPlayer = NodePath("AnimationPlayer")
-navAgent = NodePath("NavigationAgent3D")
-IdleTimer = NodePath("IdleTimer")
-WanderTimer = NodePath("WanderTimer")
-meshParent = NodePath("Armature2")
-animationDict = {
-"attacking": "mushroom_attack",
-"idling": "mushroom_idle",
-"moving": "mushroom_move"
-}
+routineStrategy = SubResource("Resource_0yesf")
+playerDetectedStrategy = SubResource("Resource_enkht")
+patrollingAIData = NodePath("AIObjectData")
 
 [node name="IdleTimer" type="Timer" parent="."]
 wait_time = 4.0
@@ -186,7 +200,7 @@ bones/0/parent = -1
 bones/0/rest = Transform3D(-6.07967e-05, -0.00221237, 0.999998, -2.80328e-07, 0.999998, 0.00221237, -1, -1.45636e-07, -6.07967e-05, 0.00217608, -0.983589, 1.32154e-07)
 bones/0/enabled = true
 bones/0/position = Vector3(0.00217608, -0.983589, 1.32154e-07)
-bones/0/rotation = Quaternion(-0.000782268, 0.707128, 0.000782117, 0.707085)
+bones/0/rotation = Quaternion(-0.0007822679, 0.70712787, 0.0007821169, 0.70708483)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Bone"
 bones/1/parent = 0
@@ -200,7 +214,7 @@ bones/2/parent = 1
 bones/2/rest = Transform3D(0.999903, 0.0139521, -6.27468e-08, -0.0139521, 0.999903, 1.35527e-07, 6.46316e-08, -1.34639e-07, 1, -5.48653e-17, 1, 4.33681e-19)
 bones/2/enabled = true
 bones/2/position = Vector3(-5.48653e-17, 1, 4.33681e-19)
-bones/2/rotation = Quaternion(-6.75433e-08, -3.18454e-08, -0.00697622, 0.999976)
+bones/2/rotation = Quaternion(-6.7543276e-08, -3.1845367e-08, -0.006976217, 0.9999757)
 bones/2/scale = Vector3(1, 1, 1)
 
 [node name="EvilMushroom" type="MeshInstance3D" parent="Armature2/Skeleton3D"]
@@ -230,7 +244,7 @@ settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature2/Skeleton3D"]
-transform = Transform3D(0.999899, 0.0142255, 8.87411e-05, -0.0142255, 0.999899, 0.00016529, -8.64325e-05, -0.000166536, 1, 0.000273462, 1, -0.00016519)
+transform = Transform3D(0.9998988, 0.0142255165, 8.8741144e-05, -0.014225531, 0.9998988, 0.00016528978, -8.6432505e-05, -0.00016653616, 1, 0.00027346215, 0.9999996, -0.00016519007)
 bone_name = "Bone.001"
 bone_idx = 2
 
@@ -249,5 +263,13 @@ shape = SubResource("CylinderShape3D_46pwp")
 [node name="WanderTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="AIObjectData" type="Node3D" parent="." node_paths=PackedStringArray("animationPlayer", "navAgent", "IdleTimer", "WanderTimer", "ownerAI")]
+script = ExtResource("4_nmvgs")
+animationPlayer = NodePath("../AnimationPlayer")
+navAgent = NodePath("../NavigationAgent3D")
+IdleTimer = NodePath("../IdleTimer")
+WanderTimer = NodePath("../WanderTimer")
+ownerAI = NodePath("..")
 
 [editable path="Armature2/Skeleton3D/BoneAttachment3D/HitBox"]

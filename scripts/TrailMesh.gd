@@ -86,25 +86,8 @@ func _physics_process(delta: float) -> void:
 		return
 
 	for i in range(points.size()):
+		
 		var t: float = float(i) / (points.size() - 1.0)
-#
-		##var currColor: Color = endColor
-#
-		#var progress: float = t
-#
-		#if interpolationDirection == InterpolationDirection.BACKWARD:
-			#progress = 1 - t
-
-		#if colorInterpolationMode == InterpolationMode.LINEAR:
-			#currColor = startColor.lerp(endColor, 1 - progress)
-		#elif colorInterpolationMode == InterpolationMode.SQUARE:
-			#currColor = startColor.lerp(endColor, 1- (progress ** 2))
-		#elif colorInterpolationMode == InterpolationMode.CUBE:
-			#currColor = startColor.lerp(endColor, 1 - pow(progress, 3))
-		#elif colorInterpolationMode == InterpolationMode.QUAD:
-			#currColor = startColor.lerp(endColor,1- pow(progress, 4))
-#
-		#mesh.surface_set_color(currColor)
 
 		var currWidth: Vector3 = widths[i][0] - pow(1-t, scaleAcceleration) * widths[i][1]
 

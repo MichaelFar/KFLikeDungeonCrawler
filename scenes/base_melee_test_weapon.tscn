@@ -4,7 +4,7 @@
 [ext_resource type="Curve3D" uid="uid://dqrppbi1njpud" path="res://attack_curve_resources/BaseWeaponCurve.tres" id="1_f5ju4"]
 [ext_resource type="Texture2D" uid="uid://c3nxqxhw43c4x" path="res://textures/BaseSword/BaseSword_SwordMaterial_BaseColor.png" id="2_2hbpg"]
 [ext_resource type="Resource" uid="uid://dajc7c2q3kwrp" path="res://scripts/behavior strategy scripts/TestMeleeSwingStrategy.tres" id="2_rmc1a"]
-[ext_resource type="Script" uid="uid://csyoyeavkfqdn" path="res://scripts/behavior strategy scripts/MeleeBlockStrategy.gd" id="3_nm43k"]
+[ext_resource type="Script" uid="uid://csyoyeavkfqdn" path="res://scripts/behavior strategy scripts/weapon_strategies/MeleeBlockStrategy.gd" id="3_nm43k"]
 [ext_resource type="Texture2D" uid="uid://bs34q37d2dame" path="res://textures/BaseSword/BaseSword_SwordMaterial_Height.png" id="3_rmc1a"]
 [ext_resource type="Texture2D" uid="uid://cgglbicx8o35s" path="res://textures/BaseSword/BaseSword_SwordMaterial_Metallic.png" id="4_nm43k"]
 [ext_resource type="Texture2D" uid="uid://cqkiv8e330f8m" path="res://textures/BaseSword/BaseSword_SwordMaterial_Normal.png" id="5_dyecb"]
@@ -70,7 +70,7 @@ shadow_mesh = SubResource("ArrayMesh_5md78")
 render_priority = 0
 shader = ExtResource("8_dr3f5")
 shader_parameter/alpha_override = false
-shader_parameter/new_color = Color(0.768627, 0.164706, 0.941176, 1)
+shader_parameter/new_color = Color(0.72608066, 0.72608066, 0.72608066, 1)
 
 [node name="BaseMeleeTestWeapon" type="Node3D" node_paths=PackedStringArray("weaponObjectData")]
 script = ExtResource("1_2hbpg")
@@ -103,7 +103,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.288024, -0.131764, 1.39405)
 curve = ExtResource("1_f5ju4")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="BlockRotationParent/pivotPoint/Path3D"]
-transform = Transform3D(0.999843, 0.00020894235, 0.0003991174, 0, 0.88587964, -0.46374115, -0.00045047453, 0.46375442, 0.8858541, 0.000286372, 0.204488, -0.534883)
+transform = Transform3D(0.9998453, 0.00020894161, 0.00039911733, 0, 0.8858765, -0.46374112, -0.00045047558, 0.46375275, 0.885854, 0.000286372, 0.204488, -0.534883)
 
 [node name="SwordModel" type="MeshInstance3D" parent="BlockRotationParent/pivotPoint/Path3D/PathFollow3D"]
 transform = Transform3D(0.508464, -3.4088e-10, -0.000210796, 0.000106248, 0.319283, 0.216991, 0.000202958, -0.167143, 0.414505, -0.000147435, -0.541645, 0.151548)

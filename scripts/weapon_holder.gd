@@ -43,14 +43,7 @@ func _input(event: InputEvent) -> void:
 	if(event.is_action_pressed("secondary")):
 		
 		weapon.activate_secondary_strategy("secondary")
-		
-	#elif(event.is_action_released("secondary")):
-		#
-		#weapon.return_weapon()
-	
-	#if(weapon.weaponState == weapon.WeaponStates.BLOCKING):
-		#
-		#weapon.return_weapon()
+
 		
 func sway_weapon(delta):
 	

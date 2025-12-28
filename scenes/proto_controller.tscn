@@ -14,12 +14,17 @@ height = 2.095
 radius = 0.4
 height = 0.90878904
 
-[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("head", "collider", "camera", "initialCrouchCameraDestination")]
+[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("head", "collider", "camera", "standingCollider", "initialCrouchCameraDestination", "crouchCheckRaycast")]
 script = ExtResource("1_ucva2")
+base_speed = 5.0
+crouch_speed = 2.0
+creep_speed_coefficient = 0.2
 head = NodePath("Head")
 collider = NodePath("Collider")
 camera = NodePath("Head/Camera3D")
+standingCollider = NodePath("StandingCollider")
 initialCrouchCameraDestination = NodePath("CrouchCameraDestination")
+crouchCheckRaycast = NodePath("Head/CrouchRaycast")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07134, 0)
@@ -31,7 +36,7 @@ mesh = SubResource("CapsuleMesh_ucva2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000899315, 0.45066053, -0.00151742)
 shape = SubResource("CapsuleShape3D_iof21")
 
-[node name="Collider2" type="CollisionShape3D" parent="."]
+[node name="StandingCollider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000899315, 1.5293639, -0.00151742)
 shape = SubResource("CapsuleShape3D_iof21")
 
@@ -45,6 +50,12 @@ fov = 62.6
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.259403, 0.155733, -1.73245)
 script = ExtResource("2_rji43")
 playerController = NodePath("../..")
+
+[node name="CrouchRaycast" type="RayCast3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.036816716, 0)
+target_position = Vector3(0, 1, 0)
+debug_shape_custom_color = Color(0.6059331, 0.15154111, 0.14759746, 1)
+debug_shape_thickness = 5
 
 [node name="CrouchCameraDestination" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0254161, 0)

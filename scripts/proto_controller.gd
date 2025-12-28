@@ -30,6 +30,8 @@ extends CharacterBody3D
 
 @export var crouch_speed : float = 3.5
 
+@export var creep_speed_coefficient : float = .3
+
 @export_group("Input Actions")
 ## Name of Input Action to move Left.
 @export var input_left : String = "Left"
@@ -55,16 +57,23 @@ var freeflying : bool = false
 @export var head: Node3D 
 @export var collider: CollisionShape3D
 @export var camera : Camera3D
-
+@export var standingCollider : CollisionShape3D
 var initialHeadPosition : Vector3
 @export var initialCrouchCameraDestination : Marker3D
-
+@export var crouchCheckRaycast : RayCast3D
 signal Moving
 signal Stopped
 
 var isMoving : bool = false
 
-var isCrouching : bool = false
+var isCrouching : bool = false :
+	set(value):
+		isCrouching = value
+		crouchCheckRaycast.enabled = isCrouching
+	get():
+		return isCrouching
+
+var isCreeping : bool = false
 
 var original_speed : float
 
@@ -76,6 +85,7 @@ func _ready() -> void:
 	Global.camera = camera
 	Global.player = self
 	original_speed = base_speed
+	#crouchCheckRaycast.enabled = isCrouching
 	
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
@@ -148,26 +158,37 @@ func _physics_process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	
+	base_speed = original_speed
+	
+	var final_speed_coefficient = 1.0
 	if (event.is_action_released("Crouch")):
 		crouch()
 	
-	if(event.is_action_pressed("Creep")):
-		base_speed = original_speed / 3.0
-	if(event.is_action_released("Creep")):
-		base_speed = original_speed if !isCrouching else crouch_speed
+	isCreeping = event.is_action_pressed("Creep", true)
+	
+	if(isCrouching):
+		final_speed_coefficient /= 2
+	if(isCreeping):
+		final_speed_coefficient /= 2
+	
+	base_speed = original_speed * final_speed_coefficient
+	
 ## Rotate us to look around.
 ## Base of controller rotates around y (left/right). Head rotates around x (up/down).
 ## Modifies look_rotation based on rot_input, then resets basis and rotates by look_rotation.
 func crouch():
 	
-	
-	var destination = initialCrouchCameraDestination.position.y if !isCrouching else initialHeadPosition.y
-	
-	
-	isCrouching = !isCrouching
-	base_speed = crouch_speed if isCrouching else original_speed
-	var tween = get_tree().create_tween()
-	tween.tween_property(head, "position:y",  destination, 0.2)
+	if(!crouchCheckRaycast.is_colliding()):
+		var destination = initialCrouchCameraDestination.position.y if !isCrouching else initialHeadPosition.y
+		
+		isCrouching = !isCrouching
+		
+		standingCollider.disabled = isCrouching
+		#base_speed = crouch_speed if isCrouching else original_speed
+		var tween = get_tree().create_tween()
+		tween.set_trans(tween.TRANS_SINE)
+		tween.set_ease(Tween.EASE_IN)
+		tween.tween_property(head, "position:y",  destination, 0.2)
 	
 func rotate_look(rot_input : Vector2):
 	look_rotation.x -= rot_input.y * look_speed

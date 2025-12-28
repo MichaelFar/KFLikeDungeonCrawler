@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="MeleeSwingStrategy" load_steps=2 format=3 uid="uid://dajc7c2q3kwrp"]
 
-[ext_resource type="Script" uid="uid://ccy8n53fs6p6g" path="res://scripts/behavior strategy scripts/MeleeSwingStrategy.gd" id="1_wc6wp"]
+[ext_resource type="Script" uid="uid://ccy8n53fs6p6g" path="res://scripts/behavior strategy scripts/weapon_strategies/MeleeSwingStrategy.gd" id="1_wc6wp"]
 
 [resource]
 script = ExtResource("1_wc6wp")
