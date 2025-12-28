@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ba8gulyv27bes"]
+
+[ext_resource type="Script" uid="uid://bq2rt2ngcwopn" path="res://scripts/patrol_paths.gd" id="1_mjfvw"]
+
+[node name="PatrolPaths" type="Node3D"]
+script = ExtResource("1_mjfvw")
+
+[node name="Path3D" type="Path3D" parent="."]

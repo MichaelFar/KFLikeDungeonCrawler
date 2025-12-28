@@ -2,13 +2,14 @@
 
 [ext_resource type="Script" uid="uid://b14jdqksl2ign" path="res://scripts/base_enemy.gd" id="1_46pwp"]
 [ext_resource type="Texture2D" uid="uid://bqs6osa0x74is" path="res://textures/EvilMushroom/MushroomEnemyFBX_EvilMushroomMaterial_BaseColor.png" id="1_fj4c4"]
-[ext_resource type="Script" uid="uid://rkw12dulditi" path="res://scripts/behavior strategy scripts/AI_strategies/RoutineAIStrategy.gd" id="2_0yesf"]
+[ext_resource type="Script" uid="uid://rkw12dulditi" path="res://scripts/behavior strategy scripts/AI_strategies/RoutineAIPatrolStrategy.gd" id="2_0yesf"]
 [ext_resource type="Script" uid="uid://b830456hqhw71" path="res://scripts/behavior strategy scripts/AI_strategies/PlayerDetectedStrategy.gd" id="3_enkht"]
 [ext_resource type="PackedScene" uid="uid://ble62hlaj1nf7" path="res://scenes/hit_box.tscn" id="3_fj4c4"]
 [ext_resource type="Script" uid="uid://drqya58f0h24u" path="res://scripts/NodeAIDataScripts/patrolling_ai_data.gd" id="4_nmvgs"]
 
 [sub_resource type="Resource" id="Resource_0yesf"]
 script = ExtResource("2_0yesf")
+speed = 4.0
 animationDict = {
 "attacking": "mushroom_attack",
 "idling": "mushroom_idle",
@@ -116,7 +117,7 @@ tracks/2/keys = {
 "args": [0.0],
 "method": &"set_speed"
 }, {
-"args": [4.0],
+"args": [1.0],
 "method": &"set_speed"
 }, {
 "args": [0.0],
@@ -185,6 +186,7 @@ wait_time = 4.0
 one_shot = true
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+simplify_path = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -214,7 +216,7 @@ bones/2/parent = 1
 bones/2/rest = Transform3D(0.999903, 0.0139521, -6.27468e-08, -0.0139521, 0.999903, 1.35527e-07, 6.46316e-08, -1.34639e-07, 1, -5.48653e-17, 1, 4.33681e-19)
 bones/2/enabled = true
 bones/2/position = Vector3(-5.48653e-17, 1, 4.33681e-19)
-bones/2/rotation = Quaternion(-6.7543276e-08, -3.1845367e-08, -0.006976217, 0.9999757)
+bones/2/rotation = Quaternion(-6.754308e-08, -3.1845385e-08, -0.006976228, 0.9999757)
 bones/2/scale = Vector3(1, 1, 1)
 
 [node name="EvilMushroom" type="MeshInstance3D" parent="Armature2/Skeleton3D"]
@@ -244,7 +246,7 @@ settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature2/Skeleton3D"]
-transform = Transform3D(0.9998988, 0.0142255165, 8.8741144e-05, -0.014225531, 0.9998988, 0.00016528978, -8.6432505e-05, -0.00016653616, 1, 0.00027346215, 0.9999996, -0.00016519007)
+transform = Transform3D(0.9998988, 0.014225539, 8.8741144e-05, -0.014225554, 0.9998988, 0.00016528978, -8.6432505e-05, -0.00016653616, 1, 0.00027346215, 0.9999996, -0.00016519007)
 bone_name = "Bone.001"
 bone_idx = 2
 

@@ -1,11 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://ccpmrutvjhnoj"]
+[gd_scene load_steps=17 format=3 uid="uid://ccpmrutvjhnoj"]
 
 [ext_resource type="Material" uid="uid://cf33i0xo6uddb" path="res://material resources/debugmaterial.tres" id="1_07lw1"]
 [ext_resource type="PackedScene" uid="uid://ba1lub2ghq74d" path="res://scenes/3_cube_block.tscn" id="2_x4i6d"]
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://scenes/proto_controller.tscn" id="3_iggib"]
 [ext_resource type="PackedScene" uid="uid://4juhdoaix6ik" path="res://scenes/base_melee_test_weapon.tscn" id="4_f42s3"]
 [ext_resource type="PackedScene" uid="uid://wkc70xcqwhns" path="res://scenes/evil_mushroom.tscn" id="5_f42s3"]
-[ext_resource type="PackedScene" uid="uid://dv2fcnbp851kb" path="res://scenes/wander_region.tscn" id="6_1ry1m"]
+[ext_resource type="Script" uid="uid://rkw12dulditi" path="res://scripts/behavior strategy scripts/AI_strategies/RoutineAIPatrolStrategy.gd" id="6_403jv"]
+[ext_resource type="PackedScene" uid="uid://ba8gulyv27bes" path="res://scenes/patrol_paths.tscn" id="7_403jv"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7b4ql"]
 sky_horizon_color = Color(0.6370697, 0.67591643, 0.7090732, 1)
@@ -25,9 +26,36 @@ glow_enabled = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_07lw1"]
 
+[sub_resource type="Resource" id="Resource_wjibx"]
+script = ExtResource("6_403jv")
+speed = 4.0
+animationDict = {
+"attacking": "mushroom_attack",
+"idling": "mushroom_idle",
+"moving": "mushroom_move"
+}
+startingState = 1
+metadata/_custom_type_script = "uid://rkw12dulditi"
+
 [sub_resource type="NavigationMesh" id="NavigationMesh_f42s3"]
 vertices = PackedVector3Array(-8.874199, 0.5, -7.9448605, -8.874199, 0.5, 8.05514, 8.875801, 0.5, 8.05514, 8.875801, 0.5, -7.9448605)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="Curve3D" id="Curve3D_1ry1m"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -5.0479293, 0, 3.7537503, 0, 0, 0, 0, 0, 0, -1.7116917, 0, 3.7122545, 0, 0, 0, 0, 0, 0, 0.7033454, 0, 3.5960672, 0, 0, 0, 0, 0, 0, 3.2179718, 0, 3.5462725, 0, 0, 0, 0, 0, 0, 4.6952114, 0, 3.529674),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[sub_resource type="Curve3D" id="Curve3D_403jv"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 6.17764, 0, 3.9565628, 0, 0, 0, 0, 0, 0, 6.3747263, 0, 2.3261037, 0, 0, 0, 0, 0, 0, 6.392646, 0, 0.3910528, 0, 0, 0, 0, 0, 0, 6.3030596, 0, -1.0781525, 0, 0, 0, 0, 0, 0, 6.3747263, 0, -2.887783, 0, 0, 0, 0, 0, 0, 6.016385, 0, -5.002005, 0, 0, 0, 0, 0, 0, 5.8909636, 0, -6.077033, 0, 0, 0, 0, 0, 0, 4.833852, 0, -6.363707, 0, 0, 0, 0, 0, 0, 4.027583, 0, -5.933696, 0, 0, 0, 0, 0, 0, 3.7946596, 0, -5.0199223, 0, 0, 0, 0, 0, 0, 3.722991, 0, -3.9448938, 0, 0, 0, 0, 0, 0, 3.6513243, 0, -2.7623632, 0, 0, 0, 0, 0, 0, 3.66924, 0, -1.4364947, 0, 0, 0, 0, 0, 0, 3.6871557, 0, 0.10437866, 0, 0, 0, 0, 0, 0, 3.6513243, 0, 1.5377489, 0, 0, 0, 0, 0, 0, 3.7409086, 0, 2.7561145, 0, 0, 0, 0, 0, 0, 3.8842459, 0, 3.454882, 0, 0, 0, 0, 0, 0, 4.6905165, 0, 4.1357336, 0, 0, 0, 0, 0, 0, 5.389285, 0, 4.3865733, 0, 0, 0, 0, 0, 0, -0.23915017, 1.0279398, 3.9756396),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 20
+up_vector_enabled = false
 
 [node name="TestEnvironment" type="Node3D"]
 
@@ -117,29 +145,41 @@ transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -4.9
 transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -4.9765406, 1.0245012, -3.0242271)
 
 [node name="ProtoController" parent="." instance=ExtResource("3_iggib")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0234587, 0, 2.024229)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.859828, 0, 1.3790646)
 
 [node name="WeaponHolder" parent="ProtoController/Head" index="1" node_paths=PackedStringArray("weapon")]
 weapon = NodePath("BaseMeleeTestWeapon")
 
 [node name="BaseMeleeTestWeapon" parent="ProtoController/Head/WeaponHolder" index="0" instance=ExtResource("4_f42s3")]
 
-[node name="WanderRegion" parent="." instance=ExtResource("6_1ry1m")]
-transform = Transform3D(5.30452, 0, 0, 0, 1, 0, 0, 0, 4.253028, -1.3437595, 0, -0.14455271)
+[node name="EvilMushroom2" parent="." instance=ExtResource("5_f42s3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2158585, -1.1920929e-07, -2.0466223)
+routineStrategy = SubResource("Resource_wjibx")
+
+[node name="AIObjectData" parent="EvilMushroom2" index="6" node_paths=PackedStringArray("patrolPath")]
+patrolPath = NodePath("../../PatrolPaths/Path3D2")
 
 [node name="EvilMushroom" parent="." instance=ExtResource("5_f42s3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2029068, 0, -0.07582474)
 
-[node name="BoneAttachment3D" parent="EvilMushroom/Armature2/Skeleton3D" index="2"]
-transform = Transform3D(0.9998988, 0.014225513, 8.886035e-05, -0.014225528, 0.9998988, 0.00016529013, -8.655169e-05, -0.00016653824, 1, 0.00027345517, 0.9999996, -0.0001651906)
-
-[node name="AIObjectData" parent="EvilMushroom" index="6" node_paths=PackedStringArray("wanderRegion")]
-wanderRegion = NodePath("../../WanderRegion")
+[node name="AIObjectData" parent="EvilMushroom" index="6" node_paths=PackedStringArray("patrolPath")]
+patrolPath = NodePath("../../PatrolPaths/Path3D")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 navigation_mesh = SubResource("NavigationMesh_f42s3")
 
+[node name="PatrolPaths" parent="." instance=ExtResource("7_403jv")]
+
+[node name="Path3D" parent="PatrolPaths" index="0"]
+curve = SubResource("Curve3D_1ry1m")
+
+[node name="Path3D2" type="Path3D" parent="PatrolPaths"]
+curve = SubResource("Curve3D_403jv")
+
 [editable path="ProtoController"]
+[editable path="EvilMushroom2"]
+[editable path="EvilMushroom2/Armature2/Skeleton3D/BoneAttachment3D/HitBox"]
 [editable path="EvilMushroom"]
 [editable path="EvilMushroom/Armature2/Skeleton3D/BoneAttachment3D/HitBox"]
+[editable path="PatrolPaths"]

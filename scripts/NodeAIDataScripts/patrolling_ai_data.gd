@@ -10,7 +10,7 @@ class_name PatrollingAIData
 
 @export var WanderTimer : Timer
 
-@export var wanderRegion : WanderRegion
+@export var patrolPath : Path3D
 
 @export var ownerAI : CharacterBody3D
 
@@ -21,7 +21,7 @@ func populate_values(strategy_to_populate : AIStrategy):
 	navAgent,
 	IdleTimer,
 	WanderTimer,
-	wanderRegion,
+	patrolPath,
 	ownerAI)
 	strategyArray.append(strategy_to_populate)
 	strategy_to_populate.populate_values(instance_patrolling_ai_data)
