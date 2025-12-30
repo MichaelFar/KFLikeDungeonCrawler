@@ -76,7 +76,14 @@ var isCrouching : bool = false :
 var isCreeping : bool = false
 
 var original_speed : float
-
+@export var light_detection : Node3D
+@export var sub_viewport : SubViewport
+@export var texture_rect : TextureRect
+@export var color_rect : ColorRect
+@export var light_level : TextureProgressBar
+#@export var texture
+var updateLightRate : float = .1
+var deltaCounter : float = 0
 func _ready() -> void:
 	check_input_mappings()
 	initialHeadPosition = head.position
@@ -85,6 +92,7 @@ func _ready() -> void:
 	Global.camera = camera
 	Global.player = self
 	original_speed = base_speed
+	sub_viewport.debug_draw = 2
 	#crouchCheckRaycast.enabled = isCrouching
 	
 func _unhandled_input(event: InputEvent) -> void:
@@ -106,7 +114,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			disable_freefly()
 
 func _physics_process(delta: float) -> void:
+	#print("Frame rate is " + str(1 / delta))
 	# If freeflying, handle freefly and nothing else
+	deltaCounter += delta
 	if can_freefly and freeflying:
 		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
 		var motion := (head.global_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -152,9 +162,20 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = 0
 		velocity.y = 0
-	
+	if(light_detection != null):
+		light_detection.global_position = global_position # Make light detection follow the player
+		light_detection.global_rotation = global_rotation
+		if(deltaCounter > updateLightRate):
+			deltaCounter = 0.0
+			var texture = sub_viewport.get_texture() # Get the ViewportTexture from the SubViewport
+			texture_rect.texture = texture # Display this texture on the TextureRect
+			var color = get_average_color(texture) # Get the average color of the ViewportTexture
+			color_rect.color = color # Display the average color on the ColorRect
+			light_level.value = color.get_luminance() # Use the average color's brighness as the light level value
+			light_level.tint_progress.a = color.get_luminance() # Also tint the progress texture with the above
 	# Use velocity to actually move
 	move_and_slide()
+
 
 func _input(event: InputEvent) -> void:
 	
@@ -244,3 +265,8 @@ func check_input_mappings():
 	if can_freefly and not InputMap.has_action(input_freefly):
 		push_error("Freefly disabled. No InputAction found for input_freefly: " + input_freefly)
 		can_freefly = false
+
+func get_average_color(texture: ViewportTexture) -> Color:
+	var image = texture.get_image() # Get the Image of the input texture
+	image.resize(1, 1, Image.INTERPOLATE_LANCZOS) # Resize the image to one pixel
+	return image.get_pixel(0, 0) # Read the color of that pixel

@@ -2,13 +2,10 @@ extends CharacterBody3D
 
 class_name BaseEnemy
 
-
 @export var routineStrategy : RoutinePatrolAIStrategy
 @export var playerDetectedStrategy : PlayerDetectedAIStrategy
 
 @export var patrollingAIData : PatrollingAIData
-
-
 
 func _ready() -> void:
 	

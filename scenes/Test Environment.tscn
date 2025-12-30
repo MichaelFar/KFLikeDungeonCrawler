@@ -34,7 +34,6 @@ animationDict = {
 "idling": "mushroom_idle",
 "moving": "mushroom_move"
 }
-startingState = 1
 metadata/_custom_type_script = "uid://rkw12dulditi"
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_f42s3"]
@@ -60,9 +59,14 @@ up_vector_enabled = false
 [node name="TestEnvironment" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, -0.52154356, 0.60222644, 0.90333974)
+transform = Transform3D(-0.22290441, -0.2921815, -0.93002343, -0.45680612, -0.8114925, 0.36442858, -0.8611863, 0.5060731, 0.04741496, 0.43167776, 2.0422344, -0.747686)
+layers = 3
 shadow_enabled = true
-directional_shadow_max_distance = 1.0
+directional_shadow_mode = 1
+directional_shadow_split_1 = 0.527
+directional_shadow_fade_start = 1.0
+directional_shadow_max_distance = 29.0
+sky_mode = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_x4i6d")
