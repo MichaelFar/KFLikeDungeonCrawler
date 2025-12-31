@@ -14,7 +14,11 @@ var patrolPath : Path3D
 
 var ownerAI : CharacterBody3D
 
+var detectionZone : Area3D
+
 @export var speed : float
+
+@export var closeDetectionBeginDistance : float = 5.0
 
 @export var animationDict = {
 	"moving": "",
@@ -41,7 +45,7 @@ var enemyState : EnemyStates : #Handles initial settings for switching states an
 					animationPlayer.play(animationDict["moving"])
 					#set_process(true)
 					WanderTimer.start()
-					choose_point()
+					choose_patrol_point()
 					
 					#navAgent.navigation_finished.connect(change_state.bind(EnemyStates.IDLING))
 					#finished_wandering_to_point.connect(change_state.bind(EnemyStates.IDLING))
@@ -72,6 +76,12 @@ var directionOnPath = 1
 
 var originalSpeed := 0.0
 
+var player : Player
+
+var playerInDetectionZone : bool = false
+
+
+
 signal finished_wandering_to_point
 
 func populate_values(new_AI_data : InstanceAIData):
@@ -83,12 +93,20 @@ func populate_values(new_AI_data : InstanceAIData):
 		WanderTimer = new_AI_data.WanderTimer
 		patrolPath = new_AI_data.patrolPath
 		ownerAI = new_AI_data.ownerAI
+		detectionZone = new_AI_data.detectionZone
 	
 	
 	IdleTimer.timeout.connect(change_state.bind(EnemyStates.WANDERING))
 	navAgent.target_reached.connect(navigation_finished_behavior)
 	originalSpeed = speed
-	allBakedPoints = patrolPath.curve.get_baked_points()
+	
+	detectionZone.body_entered.connect(player_in_detection_zone)
+	detectionZone.body_exited.connect(player_exited_detection_zone)
+	if(patrolPath != null):
+		allBakedPoints = patrolPath.curve.get_baked_points()
+	var temp_points = allBakedPoints
+	for i in temp_points.size():
+		allBakedPoints[i] = temp_points[i] + patrolPath.get_parent().global_position
 	
 #Potentially, the strategy would be released by this string
 #Allows for, say, charge attacks, or blocking as with original functionality
@@ -135,17 +153,20 @@ func move_to_point(destination : Vector3, delta):
 func idle_state():
 	
 	#destinationPoint = wanderRegion.generate_point_in_region(wanderRegion.meshCornerPoints)
-	choose_point()
+	
 	animationPlayer.play(animationDict["idling"])
-	IdleTimer.start()
+	if(patrolPath != null):
+		choose_patrol_point()
+		IdleTimer.start()
+	else:
+		pass
 
-func choose_point():
+func choose_patrol_point():
 	#destinationPoint = wanderRegion.generate_point_in_region(wanderRegion.meshCornerPoints)
-	destinationPoint = allBakedPoints[currentPathPointIndex]
-	print("Chosen index is " + str(currentPathPointIndex))
+	if(allBakedPoints.size() != 0):
+		destinationPoint = allBakedPoints[currentPathPointIndex]
+	#print("Chosen index is " + str(currentPathPointIndex))
 func increment_point_index():
-	
-	
 	
 	currentPathPointIndex += 1 * directionOnPath
 	
@@ -158,7 +179,7 @@ func increment_point_index():
 		if(currentPathPointIndex == allBakedPoints.size() - 1):
 			change_state(EnemyStates.IDLING)
 			directionOnPath = -1
-			print("reversing direction")
+			#print("reversing direction")
 			
 			
 		if(currentPathPointIndex < 0):
@@ -173,15 +194,47 @@ func increment_point_index():
 			
 	else:
 		
-		choose_point()
+		choose_patrol_point()
 
 func change_state(new_state : EnemyStates):
 	
 	enemyState = new_state
 	
 func navigation_finished_behavior():
-	print("Reached end")
+	#print("Reached end")
 	increment_point_index()
 	
 func get_original_speed():
 	return originalSpeed
+
+func player_in_detection_zone(body: Node3D):
+	
+	if body is Player:
+		
+		player = body
+		playerInDetectionZone = true
+		check_stealth_level()
+		
+func player_exited_detection_zone(body : Node3D):
+	
+	if body is Player:
+		
+		playerInDetectionZone = false
+		print("Player exited detection zone")
+		
+func check_stealth_level():
+	
+	
+	if(playerInDetectionZone):
+		
+		var timer = ownerAI.get_tree().create_timer(0.1)
+		
+		timer.timeout.connect(check_stealth_level)
+	
+	else:
+		
+		return
+
+	var detected_level = player.check_stealth(ownerAI, closeDetectionBeginDistance)
+	
+	print("Detection level of player is " + str(detected_level))

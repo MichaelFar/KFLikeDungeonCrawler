@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ccpmrutvjhnoj"]
+[gd_scene load_steps=20 format=3 uid="uid://ccpmrutvjhnoj"]
 
 [ext_resource type="Material" uid="uid://cf33i0xo6uddb" path="res://material resources/debugmaterial.tres" id="1_07lw1"]
 [ext_resource type="PackedScene" uid="uid://ba1lub2ghq74d" path="res://scenes/3_cube_block.tscn" id="2_x4i6d"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://wkc70xcqwhns" path="res://scenes/evil_mushroom.tscn" id="5_f42s3"]
 [ext_resource type="Script" uid="uid://rkw12dulditi" path="res://scripts/behavior strategy scripts/AI_strategies/RoutineAIPatrolStrategy.gd" id="6_403jv"]
 [ext_resource type="PackedScene" uid="uid://ba8gulyv27bes" path="res://scenes/patrol_paths.tscn" id="7_403jv"]
+[ext_resource type="Script" uid="uid://b830456hqhw71" path="res://scripts/behavior strategy scripts/AI_strategies/PlayerDetectedStrategy.gd" id="7_wjibx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7b4ql"]
 sky_horizon_color = Color(0.6370697, 0.67591643, 0.7090732, 1)
@@ -17,27 +18,22 @@ ground_horizon_color = Color(0.6370697, 0.67591643, 0.7090732, 1)
 sky_material = SubResource("ProceduralSkyMaterial_7b4ql")
 
 [sub_resource type="Environment" id="Environment_x4i6d"]
-background_mode = 2
+background_mode = 1
+background_color = Color(0, 0.0072950306, 0.13950345, 1)
+background_energy_multiplier = 0.54
 sky = SubResource("Sky_07lw1")
+ambient_light_color = Color(0.0005096942, 0, 0.051013455, 1)
+ambient_light_sky_contribution = 0.13
 tonemap_mode = 2
-glow_enabled = true
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_403jv"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_07lw1"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_07lw1"]
 
-[sub_resource type="Resource" id="Resource_wjibx"]
-script = ExtResource("6_403jv")
-speed = 4.0
-animationDict = {
-"attacking": "mushroom_attack",
-"idling": "mushroom_idle",
-"moving": "mushroom_move"
-}
-metadata/_custom_type_script = "uid://rkw12dulditi"
-
-[sub_resource type="NavigationMesh" id="NavigationMesh_f42s3"]
-vertices = PackedVector3Array(-8.874199, 0.5, -7.9448605, -8.874199, 0.5, 8.05514, 8.875801, 0.5, 8.05514, 8.875801, 0.5, -7.9448605)
+[sub_resource type="NavigationMesh" id="NavigationMesh_403jv"]
+vertices = PackedVector3Array(-10.451516, 1.0054955, -7.9448605, -10.451516, 1.0054955, 8.05514, 26.048485, 1.0054955, 8.05514, 26.048485, 1.0054955, -7.9448605)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="Curve3D" id="Curve3D_1ry1m"]
@@ -50,16 +46,37 @@ point_count = 5
 [sub_resource type="Curve3D" id="Curve3D_403jv"]
 closed = true
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 6.17764, 0, 3.9565628, 0, 0, 0, 0, 0, 0, 6.3747263, 0, 2.3261037, 0, 0, 0, 0, 0, 0, 6.392646, 0, 0.3910528, 0, 0, 0, 0, 0, 0, 6.3030596, 0, -1.0781525, 0, 0, 0, 0, 0, 0, 6.3747263, 0, -2.887783, 0, 0, 0, 0, 0, 0, 6.016385, 0, -5.002005, 0, 0, 0, 0, 0, 0, 5.8909636, 0, -6.077033, 0, 0, 0, 0, 0, 0, 4.833852, 0, -6.363707, 0, 0, 0, 0, 0, 0, 4.027583, 0, -5.933696, 0, 0, 0, 0, 0, 0, 3.7946596, 0, -5.0199223, 0, 0, 0, 0, 0, 0, 3.722991, 0, -3.9448938, 0, 0, 0, 0, 0, 0, 3.6513243, 0, -2.7623632, 0, 0, 0, 0, 0, 0, 3.66924, 0, -1.4364947, 0, 0, 0, 0, 0, 0, 3.6871557, 0, 0.10437866, 0, 0, 0, 0, 0, 0, 3.6513243, 0, 1.5377489, 0, 0, 0, 0, 0, 0, 3.7409086, 0, 2.7561145, 0, 0, 0, 0, 0, 0, 3.8842459, 0, 3.454882, 0, 0, 0, 0, 0, 0, 4.6905165, 0, 4.1357336, 0, 0, 0, 0, 0, 0, 5.389285, 0, 4.3865733, 0, 0, 0, 0, 0, 0, -0.23915017, 1.0279398, 3.9756396),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 6.2970138, 0, 0.7902882, 0, 0, 0, 0, 0, 0, 5.8718753, 0, 1.5503867, 0, 0, 0, 0, 0, 0, 5.588449, 0, 2.8515713, 0, 0, 0, 0, 0, 0, 5.6915126, 0, 3.6116703, 0, 0, 0, 0, 0, 0, 6.696388, 0, 4.0754585, 0, 0, 0, 0, 0, 0, 7.5337844, 0, 3.86933, 0, 0, 0, 0, 0, 0, 8.667492, 0, 3.0705826, 0, 0, 0, 0, 0, 0, 8.925152, 0, 2.2718356, 0, 0, 0, 0, 0, 0, 8.757673, 0, 1.1123638, 0, 0, 0, 0, 0, 0, 8.010456, 0, 0.6485748, 0, 0, 0, 0, 0, 0, 7.1472945, 0, 0.5712768, 0, 0, 0, 0, 0, 0, 7.714147, 0, 5.544123, 0, 0, 0, 0, 0, 0, 9.076607, -0.46730232, 4.212133),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
-point_count = 20
-up_vector_enabled = false
+point_count = 13
+
+[sub_resource type="Resource" id="Resource_wjibx"]
+resource_local_to_scene = true
+script = ExtResource("6_403jv")
+speed = 4.0
+animationDict = {
+"attacking": "mushroom_attack",
+"idling": "mushroom_idle",
+"moving": "mushroom_move"
+}
+startingState = 1
+metadata/_custom_type_script = "uid://rkw12dulditi"
+
+[sub_resource type="Resource" id="Resource_sshnp"]
+resource_local_to_scene = true
+script = ExtResource("7_wjibx")
+animationDict = {
+"attacking": "mushroom_attack",
+"idling": "mushroom_idle",
+"moving": "mushroom_move"
+}
+metadata/_custom_type_script = "uid://b830456hqhw71"
 
 [node name="TestEnvironment" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.22290441, -0.2921815, -0.93002343, -0.45680612, -0.8114925, 0.36442858, -0.8611863, 0.5060731, 0.04741496, 0.43167776, 2.0422344, -0.747686)
+transform = Transform3D(-0.8890022, 0.43103737, -0.15453812, -0.45680606, -0.8114924, 0.36442858, 0.031675786, 0.39457172, 0.91831887, 0.43167776, 2.0422344, -0.747686)
 layers = 3
 shadow_enabled = true
 directional_shadow_mode = 1
@@ -71,6 +88,12 @@ sky_mode = 1
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_x4i6d")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02345872, 0, -0.02422905)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_403jv")
+
 [node name="EnvironmentGeometry" type="Node3D" parent="."]
 
 [node name="3CubeBlock" parent="EnvironmentGeometry" instance=ExtResource("2_x4i6d")]
@@ -81,21 +104,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0234587, 0, 6.975771)
 
 [node name="3CubeBlock3" parent="EnvironmentGeometry" instance=ExtResource("2_x4i6d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0234585, 0, 6.975771)
-
-[node name="3CubeBlock4" parent="EnvironmentGeometry" instance=ExtResource("2_x4i6d")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.0234585, 0, 6.975771)
-
-[node name="3CubeBlock5" parent="EnvironmentGeometry" instance=ExtResource("2_x4i6d")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.0234585, 0, 3.975771)
-
-[node name="3CubeBlock6" parent="EnvironmentGeometry" instance=ExtResource("2_x4i6d")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.0234585, 0, 0.97577095)
-
-[node name="3CubeBlock7" parent="EnvironmentGeometry" instance=ExtResource("2_x4i6d")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.0234585, 0, -2.024229)
-
-[node name="3CubeBlock8" parent="EnvironmentGeometry" instance=ExtResource("2_x4i6d")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.0234585, 0, -5.024229)
 
 [node name="3CubeBlock9" parent="EnvironmentGeometry" instance=ExtResource("2_x4i6d")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 8.0234585, 0, -7.024229)
@@ -111,18 +119,6 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.9
 
 [node name="3CubeBlock13" parent="EnvironmentGeometry" instance=ExtResource("2_x4i6d")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.9765413, 0, -7.024227)
-
-[node name="StaticBody3D" type="StaticBody3D" parent="EnvironmentGeometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02345872, 0, -0.02422905)
-
-[node name="Floor" type="CollisionShape3D" parent="EnvironmentGeometry/StaticBody3D"]
-shape = SubResource("WorldBoundaryShape3D_07lw1")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="EnvironmentGeometry/StaticBody3D/Floor"]
-transform = Transform3D(9.374199, 0, 0, 0, 1, 0, 0, 0, 8.44486, 0, 0, 0)
-mesh = SubResource("PlaneMesh_07lw1")
-skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("1_07lw1")
 
 [node name="3CubeBlock14" parent="EnvironmentGeometry" instance=ExtResource("2_x4i6d")]
 transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -6.9765415, 0, -8.024227)
@@ -148,6 +144,84 @@ transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -4.9
 [node name="3CubeBlock21" parent="EnvironmentGeometry" instance=ExtResource("2_x4i6d")]
 transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -4.9765406, 1.0245012, -3.0242271)
 
+[node name="3CubeBlock22" parent="EnvironmentGeometry" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -4.9765406, -0.14013493, -3.0242271)
+
+[node name="EnvironmentGeometry2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7, 0, 0)
+
+[node name="3CubeBlock" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02345872, 0, 6.975771)
+
+[node name="3CubeBlock2" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0234587, 0, 6.975771)
+
+[node name="3CubeBlock3" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0234585, 0, 6.975771)
+
+[node name="3CubeBlock4" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.0234585, 0, 6.975771)
+
+[node name="3CubeBlock5" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.0234585, 0, 3.975771)
+
+[node name="3CubeBlock6" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.0234585, 0, 0.97577095)
+
+[node name="3CubeBlock7" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.0234585, 0, -2.024229)
+
+[node name="3CubeBlock8" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.0234585, 0, -5.024229)
+
+[node name="3CubeBlock9" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 8.0234585, 0, -7.024229)
+
+[node name="3CubeBlock10" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 5.0234585, 0, -7.0242286)
+
+[node name="3CubeBlock11" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.0234587, 0, -7.024228)
+
+[node name="3CubeBlock12" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.9765413, 0, -7.0242276)
+
+[node name="3CubeBlock13" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.9765413, 0, -7.024227)
+
+[node name="Floor" type="CollisionShape3D" parent="EnvironmentGeometry2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13997269, 0.007088542, 0)
+shape = SubResource("WorldBoundaryShape3D_07lw1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnvironmentGeometry2/Floor"]
+transform = Transform3D(9.374199, 0, 0, 0, 1, 0, 0, 0, 8.44486, 0, 0, 0)
+mesh = SubResource("PlaneMesh_07lw1")
+skeleton = NodePath("../../NavigationRegion3D")
+surface_material_override/0 = ExtResource("1_07lw1")
+
+[node name="Floor2" type="CollisionShape3D" parent="EnvironmentGeometry2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.564976, 0.0054955482, 0)
+shape = SubResource("WorldBoundaryShape3D_07lw1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnvironmentGeometry2/Floor2"]
+transform = Transform3D(9.374199, 0, 0, 0, 1, 0, 0, 0, 8.44486, 0, 0, 0)
+mesh = SubResource("PlaneMesh_07lw1")
+skeleton = NodePath("../../NavigationRegion3D")
+surface_material_override/0 = ExtResource("1_07lw1")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="EnvironmentGeometry2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.98766, -1.0141149, 0)
+navigation_mesh = SubResource("NavigationMesh_403jv")
+
+[node name="3CubeBlock19" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -7.9765387, 0, 6.9757733)
+
+[node name="3CubeBlock20" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -4.9765387, 0, 6.975773)
+
+[node name="3CubeBlock21" parent="EnvironmentGeometry2" instance=ExtResource("2_x4i6d")]
+transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -4.9765406, 1.0245012, -3.0242271)
+
 [node name="ProtoController" parent="." instance=ExtResource("3_iggib")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.859828, 0, 1.3790646)
 
@@ -156,24 +230,8 @@ weapon = NodePath("BaseMeleeTestWeapon")
 
 [node name="BaseMeleeTestWeapon" parent="ProtoController/Head/WeaponHolder" index="0" instance=ExtResource("4_f42s3")]
 
-[node name="EvilMushroom2" parent="." instance=ExtResource("5_f42s3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2158585, -1.1920929e-07, -2.0466223)
-routineStrategy = SubResource("Resource_wjibx")
-
-[node name="AIObjectData" parent="EvilMushroom2" index="6" node_paths=PackedStringArray("patrolPath")]
-patrolPath = NodePath("../../PatrolPaths/Path3D2")
-
-[node name="EvilMushroom" parent="." instance=ExtResource("5_f42s3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2029068, 0, -0.07582474)
-
-[node name="AIObjectData" parent="EvilMushroom" index="6" node_paths=PackedStringArray("patrolPath")]
-patrolPath = NodePath("../../PatrolPaths/Path3D")
-
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-navigation_mesh = SubResource("NavigationMesh_f42s3")
-
 [node name="PatrolPaths" parent="." instance=ExtResource("7_403jv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.252977, 0, 0.39081478)
 
 [node name="Path3D" parent="PatrolPaths" index="0"]
 curve = SubResource("Curve3D_1ry1m")
@@ -181,9 +239,11 @@ curve = SubResource("Curve3D_1ry1m")
 [node name="Path3D2" type="Path3D" parent="PatrolPaths"]
 curve = SubResource("Curve3D_403jv")
 
+[node name="EvilMushroom" parent="." instance=ExtResource("5_f42s3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.848009, 0, 2.5744371)
+routineStrategy = SubResource("Resource_wjibx")
+playerDetectedStrategy = SubResource("Resource_sshnp")
+
 [editable path="ProtoController"]
-[editable path="EvilMushroom2"]
-[editable path="EvilMushroom2/Armature2/Skeleton3D/BoneAttachment3D/HitBox"]
-[editable path="EvilMushroom"]
-[editable path="EvilMushroom/Armature2/Skeleton3D/BoneAttachment3D/HitBox"]
+[editable path="ProtoController/StealthManager"]
 [editable path="PatrolPaths"]

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://o1lh4an6ng7t" path="res://scripts/proto_controller.gd" id="1_ucva2"]
 [ext_resource type="Script" uid="uid://cd37o20x1nwql" path="res://scripts/weapon_holder.gd" id="2_rji43"]
+[ext_resource type="PackedScene" uid="uid://knvekqkwtv0k" path="res://scenes/stealth_manager.tscn" id="3_h1xqo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
 albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
@@ -14,25 +15,34 @@ height = 2.095
 radius = 0.4
 height = 0.90878904
 
-[sub_resource type="BoxMesh" id="BoxMesh_rji43"]
-size = Vector3(0.5, 0.5, 0.5)
-
-[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("head", "collider", "camera", "standingCollider", "initialCrouchCameraDestination", "crouchCheckRaycast", "light_detection", "sub_viewport", "texture_rect", "color_rect", "light_level")]
+[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("stealthManager", "head", "collider", "camera", "standingCollider", "initialCrouchCameraDestination", "crouchCheckRaycast")]
 script = ExtResource("1_ucva2")
+can_move = null
+has_gravity = null
+can_jump = null
+can_sprint = null
+can_freefly = null
+look_speed = null
 base_speed = 5.0
+jump_velocity = null
+sprint_speed = null
+freefly_speed = null
 crouch_speed = 2.0
 creep_speed_coefficient = 0.2
+input_left = null
+input_right = null
+input_forward = null
+input_back = null
+input_jump = null
+input_sprint = null
+input_freefly = null
+stealthManager = NodePath("StealthManager")
 head = NodePath("Head")
 collider = NodePath("Collider")
 camera = NodePath("Head/Camera3D")
 standingCollider = NodePath("StandingCollider")
 initialCrouchCameraDestination = NodePath("CrouchCameraDestination")
 crouchCheckRaycast = NodePath("Head/CrouchRaycast")
-light_detection = NodePath("SubViewport/LightDetection")
-sub_viewport = NodePath("SubViewport")
-texture_rect = NodePath("TextureRect")
-color_rect = NodePath("ColorRect")
-light_level = NodePath("ProgressBar")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07134, 0)
@@ -70,36 +80,7 @@ debug_shape_thickness = 5
 [node name="CrouchCameraDestination" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0254161, 0)
 
-[node name="SubViewport" type="SubViewport" parent="."]
-size = Vector2i(32, 32)
-render_target_update_mode = 4
+[node name="StealthManager" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_h1xqo")]
+player = NodePath("..")
 
-[node name="LightDetection" type="Node3D" parent="SubViewport"]
-
-[node name="Camera3D" type="Camera3D" parent="SubViewport/LightDetection"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.9781213, 6.447631e-08)
-cull_mask = 3
-fov = 29.470076
-far = 20.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/LightDetection"]
-transform = Transform3D(0.7071067, -0.7071067, 0, 0.7071067, 0.7071067, 0, 0, 0, 0.9999999, 0, 0, 0)
-layers = 2
-mesh = SubResource("BoxMesh_rji43")
-
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
-offset_right = 137.0
-offset_bottom = 134.0
-
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = 54.0
-offset_top = 353.0
-offset_right = 371.0
-offset_bottom = 600.0
-
-[node name="ProgressBar" type="TextureProgressBar" parent="."]
-offset_left = 215.0
-offset_top = 565.0
-offset_right = 219.0
-offset_bottom = 592.0
+[editable path="StealthManager"]

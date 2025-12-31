@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://knvekqkwtv0k"]
+
+[ext_resource type="Script" uid="uid://b6e2caiw8iski" path="res://scripts/stealth_manager.gd" id="1_l3mxy"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_rji43"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="StealthManager" type="Node3D" node_paths=PackedStringArray("light_detection", "sub_viewport", "texture_rect", "color_rect", "light_level")]
+script = ExtResource("1_l3mxy")
+light_detection = NodePath("SubViewport/LightDetection")
+sub_viewport = NodePath("SubViewport")
+texture_rect = NodePath("TextureRect")
+color_rect = NodePath("ColorRect")
+light_level = NodePath("ProgressBar")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(32, 32)
+render_target_update_mode = 4
+
+[node name="LightDetection" type="Node3D" parent="SubViewport"]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/LightDetection"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.9781213, 6.447631e-08)
+cull_mask = 3
+fov = 29.470076
+far = 20.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/LightDetection"]
+transform = Transform3D(0.7071067, -0.7071067, 0, 0.7071067, 0.7071067, 0, 0, 0, 0.9999999, 0, 0, 0)
+layers = 2
+mesh = SubResource("BoxMesh_rji43")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+offset_right = 137.0
+offset_bottom = 134.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 54.0
+offset_top = 353.0
+offset_right = 371.0
+offset_bottom = 600.0
+
+[node name="ProgressBar" type="TextureProgressBar" parent="."]
+offset_left = 215.0
+offset_top = 565.0
+offset_right = 219.0
+offset_bottom = 592.0
