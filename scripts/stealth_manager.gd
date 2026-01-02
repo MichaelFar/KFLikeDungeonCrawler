@@ -68,7 +68,7 @@ func calculate_stealth_level(enemy_to_check : BaseEnemy, distance_limit : float)
 	var query = PhysicsRayQueryParameters3D.create(player.head.global_position, enemy_to_check.global_position)
 	var result = space_state.intersect_ray(query)
 	
-	print(result.collider)
+	#print(result.collider)
 	if(result.collider is not BaseEnemy):
 		#detected_level = 0.0
 	

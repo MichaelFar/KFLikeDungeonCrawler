@@ -20,6 +20,8 @@ var detectionZone : Area3D
 
 @export var closeDetectionBeginDistance : float = 5.0
 
+@export var threshHoldToDetect : float = 0.80
+
 @export var animationDict = {
 	"moving": "",
 	"idling": "",
@@ -28,7 +30,9 @@ var detectionZone : Area3D
 
 var destinationPoint : Vector3
 
-enum EnemyStates {WANDERING, IDLING, PURSUING, ATTACKING}
+
+
+enum EnemyStates {WANDERING, IDLING, SUSPICIOUS, PURSUING, ATTACKING}
 
 @export var startingState : EnemyStates
 
@@ -61,6 +65,8 @@ var enemyState : EnemyStates : #Handles initial settings for switching states an
 					
 					idle_state()
 					print("In idle state")
+				EnemyStates.SUSPICIOUS:
+					suspicion_state(suspicionTarget, globalDelta)
 
 		get:
 			
@@ -80,7 +86,9 @@ var player : Player
 
 var playerInDetectionZone : bool = false
 
+var suspicionTarget : Node3D
 
+var globalDelta : float
 
 signal finished_wandering_to_point
 
@@ -116,6 +124,8 @@ func execute_strategy():
 	
 func strategy_process(delta : float):
 	
+	globalDelta = delta
+	
 	match enemyState:
 		
 		EnemyStates.WANDERING:
@@ -126,12 +136,16 @@ func strategy_process(delta : float):
 			
 			ownerAI.velocity = Vector3.ZERO
 			
+		#EnemyStates.SUSPICIOUS:
+			#suspicion_state(suspicionTarget, delta)
+		
 		EnemyStates.PURSUING:
 			
 			pass
 		
 		EnemyStates.ATTACKING:
 			pass
+		
 		
 	ownerAI.move_and_slide()
 	
@@ -222,8 +236,7 @@ func player_exited_detection_zone(body : Node3D):
 		playerInDetectionZone = false
 		print("Player exited detection zone")
 		
-func check_stealth_level():
-	
+func check_stealth_level() -> float:
 	
 	if(playerInDetectionZone):
 		
@@ -233,8 +246,36 @@ func check_stealth_level():
 	
 	else:
 		
-		return
-
+		return 0.0
+		
 	var detected_level = player.check_stealth(ownerAI, closeDetectionBeginDistance)
 	
+	if(detected_level >= .45):
+		
+		suspicionTarget = player
+		change_state(EnemyStates.SUSPICIOUS)
+		
 	print("Detection level of player is " + str(detected_level))
+	return detected_level
+
+func suspicion_state(target : Node3D, delta : float, suspicion_counter : int = 0):
+	
+	if(suspicion_counter <= 20 && enemyState == EnemyStates.SUSPICIOUS):
+		
+		print("Suspicion counter is " + str(suspicion_counter))
+		var timer = ownerAI.get_tree().create_timer(0.1)
+		
+		timer.timeout.connect(suspicion_state.bind(target, globalDelta, suspicion_counter + 1))
+		
+	else:
+		
+		change_state(EnemyStates.IDLING)
+	
+	
+	var direction = target.global_position - ownerAI.global_position
+	direction = direction.normalized()
+	
+	var destination_basis: Basis = Basis.looking_at(direction)
+	
+	ownerAI.basis = ownerAI.basis.slerp(destination_basis.orthonormalized(), delta).orthonormalized()
+	
