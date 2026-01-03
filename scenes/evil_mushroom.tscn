@@ -1,32 +1,16 @@
-[gd_scene load_steps=19 format=4 uid="uid://wkc70xcqwhns"]
+[gd_scene load_steps=22 format=4 uid="uid://wkc70xcqwhns"]
 
 [ext_resource type="Script" uid="uid://b14jdqksl2ign" path="res://scripts/base_enemy.gd" id="1_46pwp"]
 [ext_resource type="Texture2D" uid="uid://bqs6osa0x74is" path="res://textures/EvilMushroom/MushroomEnemyFBX_EvilMushroomMaterial_BaseColor.png" id="1_fj4c4"]
-[ext_resource type="Script" uid="uid://rkw12dulditi" path="res://scripts/behavior strategy scripts/AI_strategies/RoutineAIPatrolStrategy.gd" id="2_0yesf"]
-[ext_resource type="Script" uid="uid://b830456hqhw71" path="res://scripts/behavior strategy scripts/AI_strategies/PlayerDetectedStrategy.gd" id="3_enkht"]
 [ext_resource type="PackedScene" uid="uid://ble62hlaj1nf7" path="res://scenes/hit_box.tscn" id="3_fj4c4"]
-[ext_resource type="Script" uid="uid://drqya58f0h24u" path="res://scripts/NodeAIDataScripts/patrolling_ai_data.gd" id="4_nmvgs"]
-
-[sub_resource type="Resource" id="Resource_0yesf"]
-resource_local_to_scene = true
-script = ExtResource("2_0yesf")
-speed = 4.0
-animationDict = {
-"attacking": "mushroom_attack",
-"idling": "mushroom_idle",
-"moving": "mushroom_move"
-}
-metadata/_custom_type_script = "uid://rkw12dulditi"
-
-[sub_resource type="Resource" id="Resource_enkht"]
-resource_local_to_scene = true
-script = ExtResource("3_enkht")
-animationDict = {
-"attacking": "mushroom_attack",
-"idling": "mushroom_idle",
-"moving": "mushroom_move"
-}
-metadata/_custom_type_script = "uid://b830456hqhw71"
+[ext_resource type="Script" uid="uid://8hn4kne15ac5" path="res://addons/beehave/nodes/composites/selector.gd" id="5_0yesf"]
+[ext_resource type="Script" uid="uid://56d36h5jr4yq" path="res://scripts/Beehavior Tree Scripts/BaseEnemy/check_player_in_detection_zone_bh.gd" id="6_0yesf"]
+[ext_resource type="Script" uid="uid://cg016dbe7gs1x" path="res://addons/beehave/nodes/composites/sequence.gd" id="6_btils"]
+[ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="7_enkht"]
+[ext_resource type="Script" uid="uid://6eka3d37lcey" path="res://scripts/Beehavior Tree Scripts/BaseEnemy/check_player_stealth_bh.gd" id="7_wq7tf"]
+[ext_resource type="Script" uid="uid://okrfdtsxckdi" path="res://scripts/Beehavior Tree Scripts/BaseEnemy/suspicion_action_bh.gd" id="8_wq7tf"]
+[ext_resource type="Script" uid="uid://q1qqy1ofdy8p" path="res://scripts/Beehavior Tree Scripts/BaseEnemy/choose_patrol_point_action_bh.gd" id="10_56fj3"]
+[ext_resource type="Script" uid="uid://khg3unk8qeul" path="res://scripts/Beehavior Tree Scripts/BaseEnemy/patrol_to_point_bh.gd" id="12_4fqqf"]
 
 [sub_resource type="Animation" id="Animation_nmvgs"]
 length = 0.001
@@ -51,6 +35,18 @@ tracks/2/path = NodePath("Armature2/Skeleton3D:Bone.002")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = PackedFloat32Array(0, 1, -0.000782268, 0.707128, 0.000782117, 0.707085)
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:speed")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_8e7sf"]
 resource_name = "mushroom_attack"
@@ -106,25 +102,17 @@ tracks/1/path = NodePath("Armature2/Skeleton3D:Bone.002")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = PackedFloat32Array(0, 1, 0.00217608, -0.983589, 1.32154e-07, 0.3, 1, 0.00217608, -0.983589, 1.32154e-07, 0.520914, 1, 0.00175685, -0.794096, 1.04513e-07, 0.733333, 1, 0.00217608, -0.983589, 1.32154e-07)
-tracks/2/type = "method"
+tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AIObjectData")
+tracks/2/path = NodePath(".:speed")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.0333333, 0.33333325, 0.7666663),
+"times": PackedFloat32Array(0, 0.3, 0.73333335),
 "transitions": PackedFloat32Array(1, 1, 1),
-"values": [{
-"args": [0.0],
-"method": &"set_speed"
-}, {
-"args": [1.0],
-"method": &"set_speed"
-}, {
-"args": [0.0],
-"method": &"set_speed"
-}]
+"update": 1,
+"values": [0.0, 4.0, 0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bsye1"]
@@ -177,11 +165,19 @@ radius = 1.31641
 [sub_resource type="BoxShape3D" id="BoxShape3D_0yesf"]
 size = Vector3(1.9560547, 1.8925781, 8.523682)
 
-[node name="EvilMushroom" type="CharacterBody3D" node_paths=PackedStringArray("patrollingAIData")]
+[node name="EvilMushroom" type="CharacterBody3D" node_paths=PackedStringArray("animationPlayer", "navAgent", "IdleTimer", "WanderTimer", "detectionZone")]
 script = ExtResource("1_46pwp")
-routineStrategy = SubResource("Resource_0yesf")
-playerDetectedStrategy = SubResource("Resource_enkht")
-patrollingAIData = NodePath("AIObjectData")
+animationPlayer = NodePath("AnimationPlayer")
+navAgent = NodePath("NavigationAgent3D")
+IdleTimer = NodePath("IdleTimer")
+WanderTimer = NodePath("WanderTimer")
+detectionZone = NodePath("DetectionZone")
+animationDict = {
+"attacking": "mushroom_attack",
+"idling": "mushroom_idle",
+"moving": "mushroom_move"
+}
+startingState = 1
 
 [node name="IdleTimer" type="Timer" parent="."]
 wait_time = 4.0
@@ -248,7 +244,7 @@ settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature2/Skeleton3D"]
-transform = Transform3D(0.9998988, 0.014225535, 8.886035e-05, -0.01422555, 0.9998988, 0.00016529013, -8.655169e-05, -0.00016653824, 1, 0.00027345517, 0.9999996, -0.0001651906)
+transform = Transform3D(0.9998988, 0.014225539, 8.8741144e-05, -0.014225554, 0.9998988, 0.00016528978, -8.6432505e-05, -0.00016653616, 1, 0.00027346215, 0.9999996, -0.00016519007)
 bone_name = "Bone.001"
 bone_idx = 2
 
@@ -269,13 +265,49 @@ shape = SubResource("BoxShape3D_0yesf")
 wait_time = 5.0
 one_shot = true
 
-[node name="AIObjectData" type="Node3D" parent="." node_paths=PackedStringArray("animationPlayer", "navAgent", "IdleTimer", "WanderTimer", "ownerAI", "detectionZone")]
-script = ExtResource("4_nmvgs")
-animationPlayer = NodePath("../AnimationPlayer")
-navAgent = NodePath("../NavigationAgent3D")
-IdleTimer = NodePath("../IdleTimer")
-WanderTimer = NodePath("../WanderTimer")
-ownerAI = NodePath("..")
-detectionZone = NodePath("../DetectionZone")
+[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("7_enkht")
+actor_node_path = NodePath("..")
+blackboard = NodePath("@Node@46567")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
+
+[node name="SelectorComposite" type="Node" parent="BeehaveTree"]
+script = ExtResource("5_0yesf")
+metadata/_custom_type_script = "uid://8hn4kne15ac5"
+
+[node name="SuspectPlayerSequenceComposite" type="Node" parent="BeehaveTree/SelectorComposite"]
+script = ExtResource("6_btils")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="CheckPlayerInDetectionZone" type="Node" parent="BeehaveTree/SelectorComposite/SuspectPlayerSequenceComposite"]
+script = ExtResource("6_0yesf")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="CheckPlayerStealthLevel" type="Node" parent="BeehaveTree/SelectorComposite/SuspectPlayerSequenceComposite"]
+script = ExtResource("7_wq7tf")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="SuspicionAction" type="Node" parent="BeehaveTree/SelectorComposite/SuspectPlayerSequenceComposite"]
+script = ExtResource("8_wq7tf")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="PatrolSelectorComposite" type="Node" parent="BeehaveTree/SelectorComposite"]
+script = ExtResource("5_0yesf")
+metadata/_custom_type_script = "uid://8hn4kne15ac5"
+
+[node name="ChoosePatrolPoint" type="Node" parent="BeehaveTree/SelectorComposite/PatrolSelectorComposite"]
+script = ExtResource("10_56fj3")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="PatrolToPoint" type="Node" parent="BeehaveTree/SelectorComposite/PatrolSelectorComposite"]
+script = ExtResource("12_4fqqf")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="IdleSequenceComposite" type="Node" parent="BeehaveTree/SelectorComposite"]
+script = ExtResource("6_btils")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[connection signal="target_reached" from="NavigationAgent3D" to="BeehaveTree/SelectorComposite/PatrolSelectorComposite/ChoosePatrolPoint" method="_on_navigation_agent_3d_target_reached"]
 
 [editable path="Armature2/Skeleton3D/BoneAttachment3D/HitBox"]

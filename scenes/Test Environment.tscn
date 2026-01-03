@@ -1,13 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://ccpmrutvjhnoj"]
+[gd_scene load_steps=16 format=3 uid="uid://ccpmrutvjhnoj"]
 
 [ext_resource type="Material" uid="uid://cf33i0xo6uddb" path="res://material resources/debugmaterial.tres" id="1_07lw1"]
 [ext_resource type="PackedScene" uid="uid://ba1lub2ghq74d" path="res://scenes/3_cube_block.tscn" id="2_x4i6d"]
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://scenes/proto_controller.tscn" id="3_iggib"]
 [ext_resource type="PackedScene" uid="uid://4juhdoaix6ik" path="res://scenes/base_melee_test_weapon.tscn" id="4_f42s3"]
 [ext_resource type="PackedScene" uid="uid://wkc70xcqwhns" path="res://scenes/evil_mushroom.tscn" id="5_f42s3"]
-[ext_resource type="Script" uid="uid://rkw12dulditi" path="res://scripts/behavior strategy scripts/AI_strategies/RoutineAIPatrolStrategy.gd" id="6_403jv"]
 [ext_resource type="PackedScene" uid="uid://ba8gulyv27bes" path="res://scenes/patrol_paths.tscn" id="7_403jv"]
-[ext_resource type="Script" uid="uid://b830456hqhw71" path="res://scripts/behavior strategy scripts/AI_strategies/PlayerDetectedStrategy.gd" id="7_wjibx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7b4ql"]
 sky_horizon_color = Color(0.6370697, 0.67591643, 0.7090732, 1)
@@ -50,28 +48,6 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
 point_count = 13
-
-[sub_resource type="Resource" id="Resource_wjibx"]
-resource_local_to_scene = true
-script = ExtResource("6_403jv")
-speed = 4.0
-animationDict = {
-"attacking": "mushroom_attack",
-"idling": "mushroom_idle",
-"moving": "mushroom_move"
-}
-startingState = 1
-metadata/_custom_type_script = "uid://rkw12dulditi"
-
-[sub_resource type="Resource" id="Resource_sshnp"]
-resource_local_to_scene = true
-script = ExtResource("7_wjibx")
-animationDict = {
-"attacking": "mushroom_attack",
-"idling": "mushroom_idle",
-"moving": "mushroom_move"
-}
-metadata/_custom_type_script = "uid://b830456hqhw71"
 
 [node name="TestEnvironment" type="Node3D"]
 
@@ -239,10 +215,9 @@ curve = SubResource("Curve3D_1ry1m")
 [node name="Path3D2" type="Path3D" parent="PatrolPaths"]
 curve = SubResource("Curve3D_403jv")
 
-[node name="EvilMushroom" parent="." instance=ExtResource("5_f42s3")]
+[node name="EvilMushroom" parent="." node_paths=PackedStringArray("patrolPath") instance=ExtResource("5_f42s3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.848009, 0, 2.5744371)
-routineStrategy = SubResource("Resource_wjibx")
-playerDetectedStrategy = SubResource("Resource_sshnp")
+patrolPath = NodePath("../PatrolPaths/Path3D")
 
 [editable path="ProtoController"]
 [editable path="ProtoController/StealthManager"]
