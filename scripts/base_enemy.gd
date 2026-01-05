@@ -147,29 +147,29 @@ func choose_patrol_point():
 	if(allBakedPoints.size() != 0):
 		destinationPoint = allBakedPoints[currentPathPointIndex]
 	#print("Chosen index is " + str(currentPathPointIndex))
-func increment_point_index() -> bool:
+func increment_point_index():
 	
 	currentPathPointIndex += 1 * directionOnPath
-	
+	currentPathPointIndex = clamp(currentPathPointIndex, 0, allBakedPoints.size() - 1)
 	if(patrolPath.curve.closed):
 		
-		currentPathPointIndex = wrapi(currentPathPointIndex , 0, allBakedPoints.size())
-		return false
+		currentPathPointIndex = wrapi(currentPathPointIndex , 0, allBakedPoints.size() - 1)
+		
 	else:
 		
 		if(currentPathPointIndex == allBakedPoints.size() - 1):
 			
 			directionOnPath = -1
 			#print("reversing direction")
-			return true
 			
-		if(currentPathPointIndex < 0):
+			
+		if(currentPathPointIndex <= 0):
 			
 			directionOnPath = 1
-			return true
+			
 			
 	#choose_patrol_point()
-	return false
+	
 func change_state(new_state : EnemyStates):
 	
 	enemyState = new_state
