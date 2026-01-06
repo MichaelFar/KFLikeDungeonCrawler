@@ -14,7 +14,6 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 
 func suspect_player(actor: Node, target : Node3D, delta : float):
 	
-	
 	var direction = target.global_position - actor.global_position
 	direction = direction.normalized()
 	if(direction != Vector3.ZERO):

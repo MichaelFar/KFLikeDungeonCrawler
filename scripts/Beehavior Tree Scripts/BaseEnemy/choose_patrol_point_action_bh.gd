@@ -47,15 +47,14 @@ func _on_navigation_agent_3d_target_reached() -> void:
 	== enemyActor.allBakedPoints[enemyActor.allBakedPoints.size() - 1]
 	|| enemyActor.allBakedPoints[enemyActor.currentPathPointIndex]
 	== enemyActor.allBakedPoints[0]):
-		
-		isIdling = true
-		var timer = get_tree().create_timer(timeToIdle)
-		timer.timeout.connect(timer_time_out)
-		movement_status_change.emit()
-		enemyActor.animationPlayer.play("RESET")
-		enemyActor.animationPlayer.play(enemyActor.animationDict["idling"])
-		reached_end_of_patrol_route.emit()
-		print("Reached end of patrol route, index is " + str(enemyActor.currentPathPointIndex))
+		if(!enemyActor.patrolPath.curve.closed):
+			isIdling = true
+			var timer = get_tree().create_timer(timeToIdle)
+			timer.timeout.connect(timer_time_out)
+			movement_status_change.emit()
+			enemyActor.animationPlayer.play(enemyActor.animationDict["idling"])
+			reached_end_of_patrol_route.emit()
+			print("Reached end of patrol route, index is " + str(enemyActor.currentPathPointIndex))
 	
 	hasChosenPoint = false
 

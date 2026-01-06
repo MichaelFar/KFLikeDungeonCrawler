@@ -1,17 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://knvekqkwtv0k"]
+[gd_scene load_steps=5 format=3 uid="uid://knvekqkwtv0k"]
 
 [ext_resource type="Script" uid="uid://b6e2caiw8iski" path="res://scripts/stealth_manager.gd" id="1_l3mxy"]
+[ext_resource type="Texture2D" uid="uid://c37ai1tb8mu6h" path="res://textures/Icons/eye-svgrepo-com.svg" id="2_xbsca"]
+[ext_resource type="Texture2D" uid="uid://cvwvj8r01yo3o" path="res://textures/Icons/eye-closed-svgrepo-com.svg" id="3_ewtgs"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_rji43"]
-size = Vector3(0.5, 0.5, 0.5)
+[sub_resource type="PlaneMesh" id="PlaneMesh_ewtgs"]
 
-[node name="StealthManager" type="Node3D" node_paths=PackedStringArray("light_detection", "sub_viewport", "texture_rect", "color_rect", "light_level")]
+[node name="StealthManager" type="Node3D" node_paths=PackedStringArray("light_detection", "sub_viewport", "texture_rect", "color_rect", "light_level", "stealthIcon")]
 script = ExtResource("1_l3mxy")
 light_detection = NodePath("SubViewport/LightDetection")
 sub_viewport = NodePath("SubViewport")
 texture_rect = NodePath("TextureRect")
 color_rect = NodePath("ColorRect")
-light_level = NodePath("ProgressBar")
+light_level = NodePath("LightProgressBar")
+stealthIcon = NodePath("StealthIcon")
+eyeOpenTexture = ExtResource("2_xbsca")
+eyeClosedTexture = ExtResource("3_ewtgs")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2i(32, 32)
@@ -26,9 +30,9 @@ fov = 29.470076
 far = 20.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/LightDetection"]
-transform = Transform3D(0.7071067, -0.7071067, 0, 0.7071067, 0.7071067, 0, 0, 0, 0.9999999, 0, 0, 0)
+transform = Transform3D(0.297284, 0, 0, 0, 1.0000002, 0, 0, 0, 0.27592897, 0, 0, 0)
 layers = 2
-mesh = SubResource("BoxMesh_rji43")
+mesh = SubResource("PlaneMesh_ewtgs")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 visible = false
@@ -36,13 +40,22 @@ offset_right = 137.0
 offset_bottom = 134.0
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 offset_left = 54.0
 offset_top = 353.0
 offset_right = 371.0
 offset_bottom = 600.0
 
-[node name="ProgressBar" type="TextureProgressBar" parent="."]
-offset_left = 215.0
-offset_top = 565.0
-offset_right = 219.0
-offset_bottom = 592.0
+[node name="StealthIcon" type="TextureRect" parent="."]
+self_modulate = Color(18.892157, 18.892157, 18.892157, 1)
+offset_left = 59.0
+offset_top = 326.0
+offset_right = 364.0
+offset_bottom = 635.0
+texture = ExtResource("2_xbsca")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="LightProgressBar" type="TextureProgressBar" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0

@@ -44,10 +44,10 @@ point_count = 5
 [sub_resource type="Curve3D" id="Curve3D_403jv"]
 closed = true
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 6.2970138, 0, 0.7902882, 0, 0, 0, 0, 0, 0, 5.8718753, 0, 1.5503867, 0, 0, 0, 0, 0, 0, 5.588449, 0, 2.8515713, 0, 0, 0, 0, 0, 0, 5.6915126, 0, 3.6116703, 0, 0, 0, 0, 0, 0, 6.696388, 0, 4.0754585, 0, 0, 0, 0, 0, 0, 7.5337844, 0, 3.86933, 0, 0, 0, 0, 0, 0, 8.667492, 0, 3.0705826, 0, 0, 0, 0, 0, 0, 8.925152, 0, 2.2718356, 0, 0, 0, 0, 0, 0, 8.757673, 0, 1.1123638, 0, 0, 0, 0, 0, 0, 8.010456, 0, 0.6485748, 0, 0, 0, 0, 0, 0, 7.1472945, 0, 0.5712768, 0, 0, 0, 0, 0, 0, 7.714147, 0, 5.544123, 0, 0, 0, 0, 0, 0, 9.076607, -0.46730232, 4.212133),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 6.2970138, 0, 0.7902882, 0, 0, 0, 0, 0, 0, 5.8718753, 0, 1.5503867, 0, 0, 0, 0, 0, 0, 5.588449, 0, 2.8515713, 0, 0, 0, 0, 0, 0, 5.6915126, 0, 3.6116703, 0, 0, 0, 0, 0, 0, 6.696388, 0, 4.0754585, 0, 0, 0, 0, 0, 0, 7.5337844, 0, 3.86933, 0, 0, 0, 0, 0, 0, 8.667492, 0, 3.0705826, 0, 0, 0, 0, 0, 0, 8.925152, 0, 2.2718356, 0, 0, 0, 0, 0, 0, 8.757673, 0, 1.1123638, 0, 0, 0, 0, 0, 0, 8.010456, 0, 0.6485748, 0, 0, 0, 0, 0, 0, 7.1472945, 0, 0.5712768),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
-point_count = 13
+point_count = 11
 
 [node name="TestEnvironment" type="Node3D"]
 
@@ -218,6 +218,10 @@ curve = SubResource("Curve3D_403jv")
 [node name="EvilMushroom" parent="." node_paths=PackedStringArray("patrolPath") instance=ExtResource("5_f42s3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.848009, 0, 2.5744371)
 patrolPath = NodePath("../PatrolPaths/Path3D")
+
+[node name="EvilMushroom2" parent="." node_paths=PackedStringArray("patrolPath") instance=ExtResource("5_f42s3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.969912, 0, -0.13664246)
+patrolPath = NodePath("../PatrolPaths/Path3D2")
 
 [editable path="ProtoController"]
 [editable path="ProtoController/StealthManager"]

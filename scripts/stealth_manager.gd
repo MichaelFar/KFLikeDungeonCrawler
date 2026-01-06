@@ -9,6 +9,11 @@ class_name StealthManager
 @export var color_rect : ColorRect
 @export var light_level : TextureProgressBar
 
+@export var stealthIcon : TextureRect
+
+@export var eyeOpenTexture : Texture
+@export var eyeClosedTexture : Texture
+
 var isCrouching : bool = false
 
 var isCreeping : bool = false
@@ -21,18 +26,29 @@ var stealthLevel : float = 0.0 :
 #@export var texture
 var updateLightRate : float = .1
 var deltaCounter : float = 0
+var lightTween : Tween
 
-var lightLevel : float = 0.0
+@onready var lightLevel : float = 0.0 :
+	set(value):
+		lightLevel = value
+		var temp_light_level = lightLevel
+		
+		lightTween = get_tree().create_tween()
+		
+		lightTween.parallel().tween_property(stealthIcon, "modulate:a", lightLevel, .4)
+		lightTween.finished.connect(light_tween_finished)
+	get():
+		return lightLevel
 
 func _ready() -> void:
 	sub_viewport.debug_draw = 2
+	
 
 func _physics_process(delta: float) -> void:
 	deltaCounter += delta
 	if(light_detection != null):
 		
 		light_detection.global_position = global_position # Make light detection follow the player
-		#light_detection.global_rotation = global_rotation
 		
 		if(deltaCounter > updateLightRate):
 			
@@ -40,11 +56,13 @@ func _physics_process(delta: float) -> void:
 			var texture = sub_viewport.get_texture() # Get the ViewportTexture from the SubViewport
 			texture_rect.texture = texture # Display this texture on the TextureRect
 			var color = get_average_color(texture) # Get the average color of the ViewportTexture
-			color_rect.color = color # Display the average color on the ColorRect
+			#color_rect.color = color # Display the average color on the ColorRect
 			light_level.value = color.get_luminance() # Use the average color's brighness as the light level value
 			light_level.tint_progress.a = color.get_luminance() # Also tint the progress texture with the above
 			lightLevel = color.get_luminance()
+			
 func get_average_color(texture: ViewportTexture) -> Color:
+	
 	var image = texture.get_image() # Get the Image of the input texture
 	image.resize(1, 1, Image.INTERPOLATE_LANCZOS) # Resize the image to one pixel
 	return image.get_pixel(0, 0) # Read the color of that pixel
@@ -75,3 +93,9 @@ func calculate_stealth_level(enemy_to_check : BaseEnemy, distance_limit : float)
 		detection_level += lightLevel
 	
 	return detection_level
+
+func light_tween_finished():
+	if(stealthIcon.modulate.a <= 0.1):
+		stealthIcon.texture = eyeClosedTexture
+	else:
+		stealthIcon.texture = eyeOpenTexture
